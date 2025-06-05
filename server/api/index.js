@@ -10,6 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 // console.log(process.env.CLIENT_ORIGIN)
 // Middleware
+app.options('*', cors());
+
 app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
