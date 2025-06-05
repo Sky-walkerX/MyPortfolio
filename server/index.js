@@ -13,8 +13,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     process.env.CLIENT_ORIGIN || 'http://localhost:5173',
-    'https://vercel.com/namans-projects-6a370d2d/my-portfolio/3vxBcLhguYaH6Kp5i3p8GnYx91Cb',
-    'https://www.namankhandelwal.me'
+    'https://vercel.com/namans-projects-6a370d2d/my-portfolio/https://my-portfolio-aphi-git-main-namans-projects-6a370d2d.vercel.app',
+    'https://www.namankhandelwal.me',
+    'https://namankhandelwal.me',
+    'https://my-portfolio-aphi-qsn3hlzfd-namans-projects-6a370d2d.vercel.app/'
   ] // Allow your frontend to access
 }));
 app.use(express.json()); // To parse JSON request bodies
