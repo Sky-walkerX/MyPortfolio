@@ -11,14 +11,34 @@ const PORT = process.env.PORT || 5000;
 // console.log(process.env.CLIENT_ORIGIN)
 // Middleware
 app.use(cors({
-  origin: [
-    process.env.CLIENT_ORIGIN || 'http://localhost:5173',
-    'https://vercel.com/namans-projects-6a370d2d/my-portfolio/https://my-portfolio-aphi-git-main-namans-projects-6a370d2d.vercel.app',
-    'https://www.namankhandelwal.me',
-    'https://namankhandelwal.me',
-    'https://my-portfolio-aphi-qsn3hlzfd-namans-projects-6a370d2d.vercel.app/',
-    'https://api.namankhandelwal.me'
-  ] // Allow your frontend to access
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      process.env.CLIENT_ORIGIN || 'http://localhost:5173', // For local development
+      'https://www.namankhandelwal.me', // Your primary custom domain
+      'https://namankhandelwal.me', // The naked domain (without www)
+      'https://api.namankhandelwal.me', // Your backend's own custom domain (if it makes requests to itself or if it's the expected origin from some Vercel internal routing)
+    ];
+
+    // Regex for Vercel preview deployments of your frontend
+    // This pattern matches URLs like:
+    // https://my-portfolio-<random-hash>-namans-projects-6a370d2d.vercel.app
+    const vercelPreviewRegex = /^https:\/\/my-portfolio-[a-z0-9-]+-namans-projects-6a370d2d\.vercel\.app$/;
+
+    // Check if the current origin is in the allowed list or matches the regex
+    if (!origin) { // Allow requests with no origin (e.g., Postman, curl, some server-side requests)
+      callback(null, true);
+    } else if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else if (vercelPreviewRegex.test(origin)) { // Test against the regex
+      callback(null, true);
+    } else {
+      console.warn(`CORS: Origin ${origin} not allowed.`); // Log the problematic origin for debugging
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Ensure OPTIONS is here for preflight requests
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Add any custom headers your frontend sends
+  credentials: true, // Only if your frontend sends cookies or authorization headers that rely on cookies
 }));
 app.use(express.json()); // To parse JSON request bodies
 
