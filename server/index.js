@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
-      process.env.CLIENT_ORIGIN || 'http://localhost:5173', // For local development
+      'http://localhost:5173', // For local development
       'https://www.namankhandelwal.me', // Your primary custom domain
       'https://namankhandelwal.me', // The naked domain (without www)
       'https://api.namankhandelwal.me', // Your backend's own custom domain (if it makes requests to itself or if it's the expected origin from some Vercel internal routing)
