@@ -8,10 +8,14 @@ dotenv.config(); // Load environment variables from .env
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+// console.log(process.env.CLIENT_ORIGIN)
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' // Allow your frontend to access
+  origin: [
+    process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+    'https://vercel.com/namans-projects-6a370d2d/my-portfolio/3vxBcLhguYaH6Kp5i3p8GnYx91Cb',
+    'https://www.namankhandelwal.me'
+  ] // Allow your frontend to access
 }));
 app.use(express.json()); // To parse JSON request bodies
 
