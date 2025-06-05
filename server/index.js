@@ -16,7 +16,8 @@ app.use(cors({
     'https://vercel.com/namans-projects-6a370d2d/my-portfolio/https://my-portfolio-aphi-git-main-namans-projects-6a370d2d.vercel.app',
     'https://www.namankhandelwal.me',
     'https://namankhandelwal.me',
-    'https://my-portfolio-aphi-qsn3hlzfd-namans-projects-6a370d2d.vercel.app/'
+    'https://my-portfolio-aphi-qsn3hlzfd-namans-projects-6a370d2d.vercel.app/',
+    'https://api.namankhandelwal.me'
   ] // Allow your frontend to access
 }));
 app.use(express.json()); // To parse JSON request bodies
