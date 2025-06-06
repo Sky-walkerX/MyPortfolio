@@ -22,7 +22,7 @@ const projectsData = [
     description: "A next-generation emailing platform designed with a strong emphasis on user privacy and decentralization. Unlike traditional email providers that rely on centralized servers, this application utilizes IPFS (InterPlanetary File System) to store email content, attachments, and metadata in a distributed and tamper-proof manner.",
     imageUrl: "https://i.ibb.co/ZRCXhsh3/Screenshot-2025-05-30-202107.png", // Replace with your actual image
     liveLink: "https://courier3-two.vercel.app/", // Example: No live link available
-    repoLink: "https://github.com/your-username/courier-3", // Example repo link
+    repoLink: "https://github.com/Aaryan-Dadu/Courier3", // Example repo link
     techStack: ["React", "JavaScript", "TypeScript", "Node.js", "Express", "Pinata"],
   },
   {
@@ -40,8 +40,8 @@ const projectsData = [
     title: "Personal Portfolio", // Changed title to be more specific
     description: "A stunning personal portfolio website meticulously crafted to showcase skills, projects, and experiences. Built with a focus on performance, elegant aesthetics, and a seamless user experience. Fully responsive design, optimized for search engines, and easily updatable.",
     imageUrl: "https://i.ibb.co/cSbYnMD9/Screenshot-2025-05-30-224455.png", // Replace with your actual image
-    liveLink: "https://your-portfolio.com", // Example live link
-    repoLink: "https://github.com/your-username/portfolio-gatsby", // Example repo link
+    liveLink: "https://namankhandelwal.me", // Example live link
+    repoLink: "https://github.com/Sky-walkerX/MyPortfolio", // Example repo link
     techStack: ["ThreeJS", "ReactJS", "TailwindCSS", "GSAP", "Framer Motion"],
   },
 ];
