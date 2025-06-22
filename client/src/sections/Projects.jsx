@@ -27,10 +27,10 @@ const projectsData = [
   },
   {
     id: 3,
-    title: "P2P File sharing system",
-    description: "A decentralized file sharing system that allows users to share files directly with each other without relying on a central server. Utilizes blockchain technology to ensure security and privacy.",
-    imageUrl: "https://cdnblog.filecloud.com/blog/wp-content/uploads/2020/02/File-sync-and-share.jpg", // Replace with your actual image
-    liveLink: "#", // Example live link
+    title: "Trequila",
+    description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
+    imageUrl: "https://ibb.co/ynfWVbxh", // Replace with your actual image
+    liveLink: "https://trequila.vercel.app/", // Example live link
     repoLink: "#", // Example: No public repo
     techStack: ["Upcoming", "Python", "Flask", "WebRTC", "IPFS", "Blockchain"],
 
