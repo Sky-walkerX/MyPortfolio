@@ -29,10 +29,10 @@ const projectsData = [
     id: 3,
     title: "Trequila",
     description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
-    imageUrl: "https://ibb.co/ynfWVbxh", // Replace with your actual image
+    imageUrl: "https://i.postimg.cc/v8N6w16X/Pasted-image.png", // Replace with your actual image
     liveLink: "https://trequila.vercel.app/", // Example live link
     repoLink: "#", // Example: No public repo
-    techStack: ["Upcoming", "Python", "Flask", "WebRTC", "IPFS", "Blockchain"],
+    techStack: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "Prisma"],
 
   },
   {
