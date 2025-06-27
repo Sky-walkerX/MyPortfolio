@@ -13,7 +13,7 @@ const projectsData = [
     description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
     imageUrl: "https://i.ibb.co/bg7WsgSd/Screenshot-2025-06-27-143311.png",
     liveLink: "https://www.trequila.tech/", 
-    repoLink: "Private Repo", 
+    repoLink: "#", 
     techStack: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "Prisma"],
 
   },
@@ -86,6 +86,15 @@ const ProjectContent = ({ title, description, techStack, liveLink, repoLink }) =
           className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg border border-[var(--palette-mid-purple)] text-[var(--palette-light-purple)] font-semibold hover:bg-[var(--palette-dark-purple)] hover:border-[var(--palette-light-purple)] transition-colors text-sm sm:text-base"
         >
           GitHub Repo
+        </a>
+      )}
+      {repoLink == "#" && (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg border border-[var(--palette-mid-purple)] text-[var(--palette-light-purple)] font-semibold hover:bg-[var(--palette-dark-purple)] hover:border-[var(--palette-light-purple)] transition-colors text-sm sm:text-base"
+        >
+          Private Repo
         </a>
       )}
     </div>
