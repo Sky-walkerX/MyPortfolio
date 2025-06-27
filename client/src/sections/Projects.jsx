@@ -9,39 +9,39 @@ import { CardContainer, CardBody, CardItem } from '../components/3dCard'; // Adj
 const projectsData = [
   {
     id: 1,
+    title: "Trequila",
+    description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
+    imageUrl: "https://i.ibb.co/bg7WsgSd/Screenshot-2025-06-27-143311.png",
+    liveLink: "https://www.trequila.tech/", 
+    repoLink: "Private Repo", 
+    techStack: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "Prisma"],
+
+  },
+  {
+    id: 2,
     title: "Zonic",
     description: "A web application that integrates with Spotify to play music and podcasts, browse your library, and provides contextual insights like artist news, weather, and related GIFs.",
-    imageUrl: "https://i.ibb.co/60m02V7C/Screenshot-2025-05-30-154954.png", // Replace with your actual image
+    imageUrl: "https://i.ibb.co/60m02V7C/Screenshot-2025-05-30-154954.png", 
     liveLink: "https://zonic-frontend-pi.vercel.app",
     repoLink: "https://github.com/Sky-walkerX/Zonic",
     techStack: ["Reactjs", "Tailwind CSS", "ExpressJS", "Node.js", "TypeScript"],
   },
   {
-    id: 2,
+    id: 3,
     title: "Courier-3",
     description: "A next-generation emailing platform designed with a strong emphasis on user privacy and decentralization. Unlike traditional email providers that rely on centralized servers, this application utilizes IPFS (InterPlanetary File System) to store email content, attachments, and metadata in a distributed and tamper-proof manner.",
-    imageUrl: "https://i.ibb.co/ZRCXhsh3/Screenshot-2025-05-30-202107.png", // Replace with your actual image
-    liveLink: "https://courier3-two.vercel.app/", // Example: No live link available
-    repoLink: "https://github.com/Aaryan-Dadu/Courier3", // Example repo link
+    imageUrl: "https://i.ibb.co/ZRCXhsh3/Screenshot-2025-05-30-202107.png",
+    liveLink: "https://courier3-two.vercel.app/", 
+    repoLink: "https://github.com/Aaryan-Dadu/Courier3",
     techStack: ["React", "JavaScript", "TypeScript", "Node.js", "Express", "Pinata"],
   },
   {
-    id: 3,
-    title: "Trequila",
-    description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
-    imageUrl: "https://i.postimg.cc/v8N6w16X/Pasted-image.png", // Replace with your actual image
-    liveLink: "https://trequila.vercel.app/", // Example live link
-    repoLink: "#", // Example: No public repo
-    techStack: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "Prisma"],
-
-  },
-  {
     id: 4,
-    title: "Personal Portfolio", // Changed title to be more specific
+    title: "Personal Portfolio", 
     description: "A stunning personal portfolio website meticulously crafted to showcase skills, projects, and experiences. Built with a focus on performance, elegant aesthetics, and a seamless user experience. Fully responsive design, optimized for search engines, and easily updatable.",
-    imageUrl: "https://i.ibb.co/cSbYnMD9/Screenshot-2025-05-30-224455.png", // Replace with your actual image
-    liveLink: "https://namankhandelwal.me", // Example live link
-    repoLink: "https://github.com/Sky-walkerX/MyPortfolio", // Example repo link
+    imageUrl: "https://i.ibb.co/cSbYnMD9/Screenshot-2025-05-30-224455.png",
+    liveLink: "https://namankhandelwal.me", 
+    repoLink: "https://github.com/Sky-walkerX/MyPortfolio", 
     techStack: ["ThreeJS", "ReactJS", "TailwindCSS", "GSAP", "Framer Motion"],
   },
 ];
