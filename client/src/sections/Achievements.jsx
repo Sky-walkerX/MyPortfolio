@@ -10,7 +10,7 @@ export function DraggableCardDemo() {
     {
       title: "Incognito CTF",
       image:
-        "MyPortfolio/client/public/assets/achievements/ctf.jpeg",
+        "/assets/achievements/ctf.jpeg",
       className: "absolute top-10 left-[20%] rotate-[-5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Secured 1st position in the college in the global Capture The Flag competition.",
     },
@@ -45,21 +45,21 @@ export function DraggableCardDemo() {
     {
       title: "Google CTF",
       image:
-        "MyPortfolio/client/public/assets/achievements/googlectf.gif",
+        "/assets/achievements/googlectf.gif",
       className: "absolute top-40 right-[25%] rotate-[-3deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Solved 2 CTFs in Google CTF 2025, a prestigious global cybersecurity competition.",
     },
     {
       title: "Flipkart Grid 7.0",
       image: 
-        "MyPortfolio/client/public/assets/achievements/FlipkartGrid.jpg",
+        "/assets/achievements/FlipkartGrid.jpg",
       className: "absolute top-32 left-[25%] rotate-[6deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Solved 2 out of 3 questions in Flipkart Grid 7.0, a competitive coding event by Flipkart.",
     },
     {
       title: "Odoo Hackathon",
       image:
-        "MyPortfolio/client/public/assets/achievements/odoo.jpg",
+        "/assets/achievements/odoo.jpg",
       className: "absolute top-16 right-[20%] rotate-[-4deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Qualified for the finals in Odoo Hackathon 2025 by building skill-swap platform",
     },
@@ -69,6 +69,13 @@ export function DraggableCardDemo() {
         "https://yxxshin.github.io/images/CodeForces_Cover.jpg",
       className: "absolute top-48 left-[40%] rotate-[5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "800+ Problems solved on Codeforces, CSES, and CodeChef combined with a rating of 1327 on CF and 3 star on CodeChef.",
+    },
+    {
+      title: "Contributions in open source",
+      image:
+        "/assets/achievements/open-source.png",
+      className: "absolute top-12 right-[30%] rotate-[3deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
+      description: "Impactful contributions in orgs such as Tauri, FreeCodeCamp, Checkmate, pgmpy, and many more"
     }
   ];
 
