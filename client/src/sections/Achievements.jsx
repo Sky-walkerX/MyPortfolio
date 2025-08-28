@@ -7,7 +7,6 @@ import { Starfield } from "../components/ShootStar.jsx"; // Ensure this path is 
 
 export function DraggableCardDemo() {
   const itemsWithDescription = [
-    // ... (your items array with titles, images, descriptions, and classNames)
     {
       title: "Incognito CTF",
       image:
