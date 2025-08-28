@@ -1,24 +1,29 @@
 // components/ProjectsSection.jsx
 "use client";
 
-import React from 'react';
-import { CardContainer, CardBody, CardItem } from '../components/3dCard'; // Adjust path if needed
-// Assuming Starfield is used elsewhere or you intend to add it back. It's not currently in the JSX.
-// import { Starfield } from '../components/ShootStar';
+import { CardContainer, CardBody, CardItem } from '../components/3dCard';
 
 const projectsData = [
   {
     id: 1,
+    title: "Aniview",
+    description: "Aniview is a modern anime discovery and social interaction platform. It lets users explore anime entries, manage their watchlist, track progress, and interact with friends through social features — built with a robust Go + Rust backend and a sleek React frontend.",
+    imageUrl: "https://ibb.co/qYxL7Hx1", 
+    liveLink: "#",  
+    repoLink: "https://github.com/Sky-walkerX/Aniview-Frontend", 
+    techStack: ["React", "Next.js", "Tailwind CSS", "Go", "Rust", "PostgreSQL", "Redis", "WebSockets"],
+  },
+  {
+    id: 2,
     title: "Trequila",
     description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
     imageUrl: "https://i.ibb.co/bg7WsgSd/Screenshot-2025-06-27-143311.png",
     liveLink: "https://www.trequila.tech/", 
     repoLink: "#", 
     techStack: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "Prisma"],
-
   },
   {
-    id: 2,
+    id: 3,
     title: "PlanWise",
     description: "A task management app that helps you stay organized, set priorities, and track your progress — with fun features like XP, levels, and a heatmap to keep you motivated.",
     imageUrl: "https://i.postimg.cc/7YNj7tJj/Pasted-image-2.png",
@@ -27,7 +32,7 @@ const projectsData = [
     techStack: ["Next.js", "Tailwind CSS", "TypeScript", "Prisma", "Next-auth", "Tanstack Query"],
   },
   {
-    id: 3,
+    id: 4,
     title: "Zonic",
     description: "A web application that integrates with Spotify to play music and podcasts, browse your library, and provides contextual insights like artist news, weather, and related GIFs.",
     imageUrl: "https://i.ibb.co/60m02V7C/Screenshot-2025-05-30-154954.png", 
@@ -36,7 +41,7 @@ const projectsData = [
     techStack: ["Reactjs", "Tailwind CSS", "ExpressJS", "Node.js", "TypeScript"],
   },
   {
-    id: 4,
+    id: 5,
     title: "Courier-3",
     description: "A next-generation emailing platform designed with a strong emphasis on user privacy and decentralization. Unlike traditional email providers that rely on centralized servers, this application utilizes IPFS (InterPlanetary File System) to store email content, attachments, and metadata in a distributed and tamper-proof manner.",
     imageUrl: "https://i.ibb.co/ZRCXhsh3/Screenshot-2025-05-30-202107.png",
@@ -45,7 +50,7 @@ const projectsData = [
     techStack: ["React", "JavaScript", "TypeScript", "Node.js", "Express", "Pinata"],
   },
   {
-    id: 5,
+    id: 6,
     title: "Personal Portfolio", 
     description: "A stunning personal portfolio website meticulously crafted to showcase skills, projects, and experiences. Built with a focus on performance, elegant aesthetics, and a seamless user experience. Fully responsive design, optimized for search engines, and easily updatable.",
     imageUrl: "https://i.ibb.co/cSbYnMD9/Screenshot-2025-05-30-224455.png",
@@ -54,6 +59,7 @@ const projectsData = [
     techStack: ["ThreeJS", "ReactJS", "TailwindCSS", "GSAP", "Framer Motion"],
   },
 ];
+
 
 const ProjectContent = ({ title, description, techStack, liveLink, repoLink }) => (
   <div className="flex-1 p-4 md:p-6 text-[var(--text-on-dark)]">
@@ -77,6 +83,9 @@ const ProjectContent = ({ title, description, techStack, liveLink, repoLink }) =
       </div>
     </div>
     <div className="flex flex-wrap gap-3 sm:gap-4">
+      {liveLink === "#" && (
+        <span className="text-[var(--palette-light-purple)]">Coming Soon</span>
+      )}
       {liveLink && liveLink !== "#" && (
         <a
           href={liveLink}
