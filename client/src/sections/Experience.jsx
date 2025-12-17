@@ -8,7 +8,7 @@ export function TimelineDemo() {
     content: (
       <div>
         <p className="mb-8 text-lg font-normal text-[var(--palette-light-purple)] md:text-lg">
-          Started undergraduate studies in Computer Science at IIIT Lucknow. Explored core areas like competitive programming and web development.
+          Started undergraduate studies in Computer Science at IIIT Lucknow. Explored competitive programming and web development.
         </p>
       </div>
     ),
@@ -18,21 +18,32 @@ export function TimelineDemo() {
     content: (
       <div>
         <p className="mb-8 text-lg font-normal text-[var(--palette-light-purple)] md:text-lg">
-          Actively explored open-source contributions, participated in Summer of Bitcoin, and deepened skills in full-stack web development. Began exploring Web3 and foundational concepts in information security.
+          Actively explored open-source contributions, participated in Summer of Bitcoin, and deepened skills in full-stack web development. Explored Web3 and foundational concepts in information security.
         </p>
       </div>
     ),
   },
   {
-    title: "May – August 2025",
+    title: "May – Sept 2025",
     content: (
       <div>
         <p className="mb-8 text-lg font-normal text-[var(--palette-light-purple)] md:text-lg">
-          Working on personal and collaborative projects involving Spotify integration, decentralized applications using IPFS, and building full-stack apps with privacy-focused features. Continued learning in blockchain and cybersecurity.
+          Built multiple web development projects, participated in hackathons, and began exploring Rust for systems programming and performance-oriented development.
         </p>
       </div>
     ),
   },
+  {
+  title: "Sept – Dec 2025",
+  content: (
+    <div>
+      <p className="mb-8 text-lg font-normal text-[var(--palette-light-purple)] md:text-lg">
+        Deepened competitive programming skills by mastering core concepts like dynamic programming, graphs, and trees. Strengthened backend development using Go, explored system design fundamentals, and built projects leveraging event-driven architecture.
+      </p>
+    </div>
+  ),
+},
+
 ];
 
   return (

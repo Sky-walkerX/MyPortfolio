@@ -36,25 +36,11 @@ export function DraggableCardDemo() {
       description: "Won the Freshers Cup intra-college competitive programming team competition.",
     },
     {
-      title: "Hackofiesta 6.1",
-      image:
-        "https://www.serpro.gov.br/menu/noticias/noticias-2022/hackathon-web3/@@images/image/large",
-      className: "absolute top-8 left-[30%] rotate-[4deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
-      description: "Made courier-3 project in Hackofiesta 6.1, a hackathon organized by the college.",
-    },
-    {
       title: "Google CTF",
       image:
         "/assets/achievements/googlectf.gif",
       className: "absolute top-40 right-[25%] rotate-[-3deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Solved 2 CTFs in Google CTF 2025, a prestigious global cybersecurity competition.",
-    },
-    {
-      title: "Flipkart Grid 7.0",
-      image: 
-        "/assets/achievements/FlipkartGrid.jpg",
-      className: "absolute top-32 left-[25%] rotate-[6deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
-      description: "Solved 2 out of 3 questions in Flipkart Grid 7.0, a competitive coding event by Flipkart.",
     },
     {
       title: "Odoo Hackathon",
@@ -66,9 +52,22 @@ export function DraggableCardDemo() {
     {
       title: "Competitive Programming",
       image: 
-        "https://yxxshin.github.io/images/CodeForces_Cover.jpg",
+        "/assets/achievements/cp.png",
       className: "absolute top-48 left-[40%] rotate-[5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
-      description: "800+ Problems solved on Codeforces, CSES, and CodeChef combined with a rating of 1327 on CF and 3 star on CodeChef.",
+      description:
+      "Specialist on Codeforces with a highest rating of 1412, 3-star on CodeChef with a peak rating of 1691. Solved 1000+ algorithmic problems, demonstrating strong problem-solving skills.",
+    },
+    {
+      title: "Meta Hacker Cup 2025",
+      image: "/assets/achievements/meta.png",
+      className: "absolute top-14 right-[15%] rotate-[-6deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
+      description: "Achieved global rank 534 in Round 1 and 1434 in Round 2 of Meta Hacker Cup 2025.",
+    },
+    {
+      title: "ICPC Prelims",
+      image: "/assets/achievements/icpc.png",
+      className: "absolute top-36 left-[18%] rotate-[5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
+      description: "Secured rank #137 in ICPC India Regional Preliminary Contest, competing against top teams nationwide.",
     },
     {
       title: "Contributions in open source",

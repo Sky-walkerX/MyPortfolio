@@ -16,11 +16,11 @@ const projectsData = [
   {
     id: 2,
     title: "Trequila",
-    description: "Trequila - Your Trip Planning Companion, plan your perfect trip with Trequila. Discover destinations, create itineraries, and share your adventures.",
+    description: "An AI-powered travel planner built with a high-performance Event-Driven Architecture. Features a modular Go backend that orchestrates AI agents for itinerary generation, safety analysis, and image sourcing in parallel, delivering real-time results to a Next.js frontend via Server-Sent Events (SSE).",
     imageUrl: "https://i.ibb.co/bg7WsgSd/Screenshot-2025-06-27-143311.png",
     liveLink: "https://www.trequila.tech/", 
     repoLink: "#", 
-    techStack: ["Next.js", "Tailwind CSS", "TypeScript", "MongoDB", "Prisma"],
+    techStack: ["Go", "Next.js", "NATS JetStream", "PostgreSQL", "Heroku", "Redis", "Tailwind CSS"],
   },
   {
     id: 3,
