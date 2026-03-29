@@ -6,12 +6,12 @@ import { CardContainer, CardBody, CardItem } from '../components/3dCard';
 const projectsData = [
   {
     id: 1,
-    title: "Aniview",
-    description: "Aniview is a modern anime discovery and social interaction platform. It lets users explore anime entries, manage their watchlist, track progress, and interact with friends through social features — built with a robust Go + Rust backend and a sleek React frontend.",
-    imageUrl: "https://i.ibb.co/pjn6bHnX/image.png", 
+    title: "Zafkiel",
+    description: "Zafkiel is a modern anime discovery and social interaction platform. It lets users explore anime entries, manage their watchlist, track progress, and interact with friends through social features — built with a robust Go + Rust backend and a sleek React frontend.",
+    imageUrl: "https://i.ibb.co/bM7hDM3F/zafkiel.jpg", 
     liveLink: "#",  
-    repoLink: "https://github.com/Sky-walkerX/Aniview-Frontend", 
-    techStack: ["React", "Next.js", "Tailwind CSS", "Go", "Rust", "PostgreSQL", "Redis", "WebSockets"],
+    repoLink: "#", 
+    techStack: ["Svelte", "Tailwind CSS", "Rust", "Tauri", "SQLite", "Anilist API"]
   },
   {
     id: 2,

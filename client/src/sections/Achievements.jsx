@@ -55,7 +55,7 @@ export function DraggableCardDemo() {
         "/assets/achievements/cp.png",
       className: "absolute top-48 left-[40%] rotate-[5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description:
-      "Specialist on Codeforces with a highest rating of 1412, 3-star on CodeChef with a peak rating of 1691. Solved 1000+ algorithmic problems, demonstrating strong problem-solving skills.",
+      "Specialist on Codeforces with a highest rating of 1521, 4-star on CodeChef with a peak rating of 1812. Solved 1500+ algorithmic problems, demonstrating strong problem-solving skills.",
     },
     {
       title: "Meta Hacker Cup 2025",
