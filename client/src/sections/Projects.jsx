@@ -9,8 +9,8 @@ const projectsData = [
     title: "Zafkiel",
     description: "Zafkiel is a modern anime discovery and social interaction platform. It lets users explore anime entries, manage their watchlist, track progress, and interact with friends through social features — built with a robust Go + Rust backend and a sleek React frontend.",
     imageUrl: "https://i.ibb.co/bM7hDM3F/zafkiel.jpg", 
-    liveLink: "#",  
-    repoLink: "#", 
+    liveLink: null,  
+    repoLink: "https://github.com/Sky-walkerX/Zafkiel", 
     techStack: ["Svelte", "Tailwind CSS", "Rust", "Tauri", "SQLite", "Anilist API"]
   },
   {
