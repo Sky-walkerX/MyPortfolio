@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { twMerge } from "tailwind-merge";
 export const FlipWords = ({ words, duration = 3000, className }) => {
   const [currentWord, setCurrentWord] = useState(words[0]);

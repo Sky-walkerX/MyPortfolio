@@ -14,7 +14,16 @@ export default defineConfig({
     },
   },
   build: {
-    target: "es2022"
+    target: "es2022",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
+          animation: ['motion', 'gsap', '@gsap/react', 'lenis'],
+          vendor: ['react', 'react-dom'],
+        },
+      },
+    },
   },
   esbuild: {
     target: "es2022"

@@ -1,30 +1,30 @@
+import { lazy, Suspense } from 'react';
 import Hero from './sections/Hero.jsx';
-import About from './sections/About.jsx';
-import Footer from './sections/Footer.jsx';
-import Navbar from './sections/Navbar.jsx';
-import Contact from './sections/Contact.jsx';
-import  { DraggableCardDemo } from './sections/Achievements.jsx';
-import {ProjectsSection} from './sections/Projects.jsx';
-import {BlogsSection} from './sections/Blogs.jsx';
-import {TimelineDemo} from './sections/Experience.jsx';
-import { CardDemo } from './components/Tech.jsx';
 import SmoothScroll from './components/SmoothScroll.jsx';
+
+const About = lazy(() => import('./sections/About.jsx'));
+const ProjectsSection = lazy(() => import('./sections/Projects.jsx').then(m => ({ default: m.ProjectsSection })));
+const BlogsSection = lazy(() => import('./sections/Blogs.jsx').then(m => ({ default: m.BlogsSection })));
+const DraggableCardDemo = lazy(() => import('./sections/Achievements.jsx').then(m => ({ default: m.DraggableCardDemo })));
+const TimelineDemo = lazy(() => import('./sections/Experience.jsx').then(m => ({ default: m.TimelineDemo })));
+const Contact = lazy(() => import('./sections/Contact.jsx'));
+const Footer = lazy(() => import('./sections/Footer.jsx'));
 
 
 const App = () => {
   return (
     <SmoothScroll>
-    <main className=" mx-auto relative">
-      {/* <Navbar /> */}
+    <main className="mx-auto relative">
       <Hero />
-      <About />
-      {/* <CardDemo /> */}
-    <ProjectsSection />
-      <BlogsSection />
-      <DraggableCardDemo/>
-      <TimelineDemo />
-      <Contact />
-      <Footer />
+      <Suspense fallback={null}>
+        <About />
+        <ProjectsSection />
+        <BlogsSection />
+        <DraggableCardDemo />
+        <TimelineDemo />
+        <Contact />
+        <Footer />
+      </Suspense>
     </main>
     </SmoothScroll>
   );

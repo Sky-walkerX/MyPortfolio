@@ -27,4 +27,4 @@ export function GalaxyModel(props) { // Renamed for clarity if you prefer, e.g.,
 }
 
 // Preload the model for faster initial rendering
-useGLTF.preload('/need_some_space.glb');
+useGLTF.preload('/models/need_some_space.glb');

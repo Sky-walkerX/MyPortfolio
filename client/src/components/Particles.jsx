@@ -53,19 +53,24 @@ const Particles = () => {
     const animate = () => {
       draw();
       update();
-      requestAnimationFrame(animate);
+      frameId = requestAnimationFrame(animate);
     };
 
+    let frameId;
     resize();
     initParticles();
-    animate();
+    frameId = requestAnimationFrame(animate);
 
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       resize();
       initParticles();
-    });
+    };
+    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", resize);
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (

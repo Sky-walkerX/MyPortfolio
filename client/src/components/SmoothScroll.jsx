@@ -10,11 +10,13 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+const defaultEasing = (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
+
 export default function SmoothScroll(props) {
   const {
     children,
     duration = 1.2,
-    easing = (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    easing = defaultEasing,
     orientation = "vertical",
     gestureOrientation = "vertical",
     smoothTouch = false,

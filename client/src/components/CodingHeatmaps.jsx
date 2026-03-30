@@ -85,7 +85,7 @@ function useCodeforcesHeatmap() {
     async function fetchCF() {
       try {
         const res = await fetch(
-          `https://codeforces.com/api/user.status?handle=${encodeURIComponent(CF_USERNAME)}&from=1&count=10000`
+          `https://codeforces.com/api/user.status?handle=${encodeURIComponent(CF_USERNAME)}&from=1&count=2000`
         );
         const json = await res.json();
         if (json.status === "OK" && !cancelled) {

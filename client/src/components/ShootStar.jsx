@@ -1,15 +1,14 @@
 "use client";
 import { cn } from "../lib/utils";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
-const getRandomStartPoint = () => {
+const getRandomStartPoint = (w, h) => {
   const side = Math.floor(Math.random() * 4);
-  const offset = Math.random() * (side % 2 === 0 ? window.innerWidth : window.innerHeight);
-
+  const offset = Math.random() * (side % 2 === 0 ? w : h);
   switch (side) {
     case 0: return { x: offset, y: 0, angle: 45 };
-    case 1: return { x: window.innerWidth, y: offset, angle: 135 };
-    case 2: return { x: offset, y: window.innerHeight, angle: 225 };
+    case 1: return { x: w, y: offset, angle: 135 };
+    case 2: return { x: offset, y: h, angle: 225 };
     case 3: return { x: 0, y: offset, angle: 315 };
     default: return { x: 0, y: 0, angle: 45 };
   }
@@ -28,139 +27,123 @@ export const Starfield = ({
   minSpeed = 12,
   maxSpeed = 28,
 }) => {
-  const [stars, setStars] = useState([]);
-  const [twinkles, setTwinkles] = useState([]);
+  const canvasRef = useRef(null);
 
-  const svgRef = useRef(null);
-
-  // Generate static twinkling stars
   useEffect(() => {
-    const generated = Array.from({ length: numTwinkleStars }, () => ({
-      id: Math.random(),
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    let w = (canvas.width = canvas.offsetWidth);
+    let h = (canvas.height = canvas.offsetHeight);
+
+    // Twinkle stars (static positions, animated opacity)
+    const twinkles = Array.from({ length: numTwinkleStars }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
       radius: Math.random() * 1.5 + 0.5,
-      delay: Math.random() * 3,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.5 + Math.random() * 1.5,
     }));
-    setTwinkles(generated);
-  }, [numTwinkleStars]);
 
-  // Add shooting stars periodically
-  useEffect(() => {
-    let timeoutId;
-    const createStar = () => {
-      const { x, y, angle } = getRandomStartPoint();
-      const newStar = {
-        id: Date.now() + Math.random(),
-        x,
-        y,
-        angle,
-        scale: 1,
-        speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
-        distance: 0,
-      };
-      setStars((prev) => [...prev, newStar]);
+    // Shooting stars
+    const shootingStars = [];
+    let spawnTimer = 0;
+    let nextSpawn = Math.random() * (maxDelay - minDelay) + minDelay;
 
-      const delay = Math.random() * (maxDelay - minDelay) + minDelay;
-      timeoutId = setTimeout(createStar, delay);
+    let frameId;
+    let lastTime = performance.now();
+
+    const animate = (now) => {
+      const dt = now - lastTime;
+      lastTime = now;
+
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, w, h);
+
+      // Draw twinkle stars
+      const t = now / 1000;
+      for (const s of twinkles) {
+        const opacity = 0.5 + 0.5 * Math.sin(t * s.speed + s.phase);
+        ctx.globalAlpha = opacity;
+        ctx.fillStyle = starColor;
+        ctx.shadowColor = starColor;
+        ctx.shadowBlur = 4;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
+
+      // Spawn shooting stars
+      spawnTimer += dt;
+      if (spawnTimer >= nextSpawn) {
+        spawnTimer = 0;
+        nextSpawn = Math.random() * (maxDelay - minDelay) + minDelay;
+        const pt = getRandomStartPoint(w, h);
+        shootingStars.push({
+          ...pt,
+          speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
+          distance: 0,
+        });
+      }
+
+      // Draw & update shooting stars
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const s = shootingStars[i];
+        const rad = (s.angle * Math.PI) / 180;
+        s.x += s.speed * Math.cos(rad);
+        s.y += s.speed * Math.sin(rad);
+        s.distance += s.speed;
+        const scale = 1 + s.distance / 100;
+        const sw = starWidth * scale;
+
+        if (s.x < -100 || s.x > w + 100 || s.y < -100 || s.y > h + 100) {
+          shootingStars.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(s.x + sw / 2, s.y + starHeight / 2);
+        ctx.rotate(rad);
+
+        const grad = ctx.createLinearGradient(-sw / 2, 0, sw / 2, 0);
+        grad.addColorStop(0, "rgba(255,255,255,0)");
+        grad.addColorStop(1, starColor);
+        ctx.fillStyle = grad;
+        ctx.shadowColor = starColor;
+        ctx.shadowBlur = 6;
+        ctx.fillRect(-sw / 2, -starHeight / 2, sw, starHeight);
+        ctx.restore();
+      }
+      ctx.shadowBlur = 0;
+
+      frameId = requestAnimationFrame(animate);
     };
 
-    createStar();
-    return () => clearTimeout(timeoutId);
-  }, [minSpeed, maxSpeed, minDelay, maxDelay]);
+    frameId = requestAnimationFrame(animate);
 
-  // Animate stars
-  useEffect(() => {
-    const moveStars = () => {
-      setStars((prevStars) =>
-        prevStars
-          .map((star) => {
-            const newX = star.x + star.speed * Math.cos((star.angle * Math.PI) / 180);
-            const newY = star.y + star.speed * Math.sin((star.angle * Math.PI) / 180);
-            const newDistance = star.distance + star.speed;
-            const newScale = 1 + newDistance / 100;
-
-            if (
-              newX < -100 || newX > window.innerWidth + 100 ||
-              newY < -100 || newY > window.innerHeight + 100
-            ) {
-              return null;
-            }
-
-            return {
-              ...star,
-              x: newX,
-              y: newY,
-              distance: newDistance,
-              scale: newScale,
-            };
-          })
-          .filter(Boolean)
-      );
-      requestAnimationFrame(moveStars);
+    const handleResize = () => {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+      for (const s of twinkles) {
+        s.x = Math.random() * w;
+        s.y = Math.random() * h;
+      }
     };
+    window.addEventListener("resize", handleResize);
 
-    const frame = requestAnimationFrame(moveStars);
-    return () => cancelAnimationFrame(frame);
-  }, []);
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [numTwinkleStars, starColor, trailColor, backgroundColor, starWidth, starHeight, minDelay, maxDelay, minSpeed, maxSpeed]);
 
   return (
-    <svg
-      ref={svgRef}
+    <canvas
+      ref={canvasRef}
       className={cn("w-full h-full absolute inset-0 pointer-events-none", className)}
-      style={{ backgroundColor }}
-    >
-      {/* Twinkle Stars */}
-      {twinkles.map((twinkle) => (
-        <circle
-          key={twinkle.id}
-          cx={twinkle.x}
-          cy={twinkle.y}
-          r={twinkle.radius}
-          fill={starColor}
-          opacity="0.8"
-        >
-          <animate
-            attributeName="opacity"
-            values="0.5;1;0.5"
-            dur="2s"
-            begin={`${twinkle.delay}s`}
-            repeatCount="indefinite"
-          />
-        </circle>
-      ))}
-
-      {/* Shooting Stars */}
-      {stars.map((star) => (
-        <rect
-          key={star.id}
-          x={star.x}
-          y={star.y}
-          width={starWidth * star.scale}
-          height={starHeight}
-          fill="url(#gradient)"
-          filter="url(#glow)"
-          transform={`rotate(${star.angle}, ${
-            star.x + (starWidth * star.scale) / 2
-          }, ${star.y + starHeight / 2})`}
-        />
-      ))}
-
-      {/* Gradient and Glow Filter */}
-      <defs>
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor={trailColor} stopOpacity="0" />
-          <stop offset="100%" stopColor={starColor} stopOpacity="1" />
-        </linearGradient>
-
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-    </svg>
+    />
   );
 };

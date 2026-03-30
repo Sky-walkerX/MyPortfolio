@@ -1,5 +1,5 @@
 "use client";
-import { useScroll, useTransform, motion } from "framer-motion"; // Changed from "motion/react" to "framer-motion" for consistency with modern Framer Motion
+import { useScroll, useTransform, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 
 export const Timeline = ({
