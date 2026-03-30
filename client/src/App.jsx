@@ -5,6 +5,7 @@ import Navbar from './sections/Navbar.jsx';
 import Contact from './sections/Contact.jsx';
 import  { DraggableCardDemo } from './sections/Achievements.jsx';
 import {ProjectsSection} from './sections/Projects.jsx';
+import {BlogsSection} from './sections/Blogs.jsx';
 import {TimelineDemo} from './sections/Experience.jsx';
 import { CardDemo } from './components/Tech.jsx';
 import SmoothScroll from './components/SmoothScroll.jsx';
@@ -19,6 +20,7 @@ const App = () => {
       <About />
       {/* <CardDemo /> */}
     <ProjectsSection />
+      <BlogsSection />
       <DraggableCardDemo/>
       <TimelineDemo />
       <Contact />
