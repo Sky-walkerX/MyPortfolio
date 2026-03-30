@@ -8,7 +8,7 @@ const blogsData = [
     title: "Setting up NextAuth (Auth.js) with Credentials and OAuth (Google, GitHub, etc.) in Next.js",
     description:
       "A comprehensive guide to integrating NextAuth (Auth.js) into your Next.js application, covering both credentials-based authentication and OAuth providers like Google and GitHub. This article walks you through the setup process, configuration options, and best practices for securing your authentication flow.",
-    imageUrl: "/assets/blog/1.png",
+    imageUrl: "/assets/blog/1.webp",
     blogLink: "https://medium.com/@skywalkerX/setting-up-nextauth-authjs-with-credentials-and-oauth-google-github-etc-in-next-js-38414db20972",
     tags: ["Authentication", "Next.js", "NextAuth", "OAuth", "Google", "GitHub"],
   },
@@ -17,7 +17,7 @@ const blogsData = [
     title: "Next.js Under the Hood",
     description:
       "A deep dive into the inner workings of Next.js, exploring its architecture, rendering strategies, and performance optimizations. This article provides insights into how Next.js handles server-side rendering, static site generation, and client-side navigation.",
-    imageUrl: "/assets/blog/2.png",
+    imageUrl: "/assets/blog/2.webp",
     blogLink: "https://medium.com/@skywalkerX/nextjs-under-the-hood-8fd40a64079b",
     tags: ["Next.js", "Web Development", "Performance", "SSR", "SSG", "Edge Functions"],
   },

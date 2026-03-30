@@ -1,4 +1,31 @@
-@import url('https://fonts.cdnfonts.com/css/general-sans');
+@font-face {
+  font-family: 'General Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('General Sans'), url('/fonts/GeneralSans-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'General Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('General Sans'), url('/fonts/GeneralSans-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'General Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('General Sans'), url('/fonts/GeneralSans-Semibold.woff') format('woff');
+}
+@font-face {
+  font-family: 'General Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('General Sans'), url('/fonts/GeneralSans-Bold.woff') format('woff');
+}
 
 @tailwind base;
 @tailwind components;

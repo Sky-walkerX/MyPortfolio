@@ -20,10 +20,11 @@ export const CardContainer = ({
   const containerRef = useRef(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
+  const rectRef = useRef(null);
+
   const handleMouseMove = (e) => {
-    if (!containerRef.current) return;
-    const { left, top, width, height } =
-      containerRef.current.getBoundingClientRect();
+    if (!containerRef.current || !rectRef.current) return;
+    const { left, top, width, height } = rectRef.current;
     const x = (e.clientX - left - width / 2) / 25;
     const y = (e.clientY - top - height / 2) / 25;
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
@@ -32,6 +33,7 @@ export const CardContainer = ({
   const handleMouseEnter = (e) => {
     setIsMouseEntered(true);
     if (!containerRef.current) return;
+    rectRef.current = containerRef.current.getBoundingClientRect();
   };
 
   const handleMouseLeave = (e) => {

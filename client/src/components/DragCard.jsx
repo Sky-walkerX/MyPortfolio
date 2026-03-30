@@ -67,24 +67,21 @@ export const DraggableCardBody = ({
     };
   }, []);
 
+  const cardRectRef = useRef(null);
+
   const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
-    const { width, height, left, top } =
-      cardRef.current?.getBoundingClientRect() ?? {
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0,
-      };
+    if (!cardRectRef.current) {
+      cardRectRef.current = cardRef.current?.getBoundingClientRect();
+    }
+    const { width, height, left, top } = cardRectRef.current ?? { width: 0, height: 0, left: 0, top: 0 };
     const centerX = left + width / 2;
     const centerY = top + height / 2;
-    const deltaX = clientX - centerX;
-    const deltaY = clientY - centerY;
-    mouseX.set(deltaX);
-    mouseY.set(deltaY);
+    mouseX.set(e.clientX - centerX);
+    mouseY.set(e.clientY - centerY);
   };
 
   const handleMouseLeave = () => {
+    cardRectRef.current = null;
     mouseX.set(0);
     mouseY.set(0);
   };
@@ -95,6 +92,7 @@ export const DraggableCardBody = ({
       drag
       dragConstraints={constraints}
       onDragStart={() => {
+        cardRectRef.current = null;
         document.body.style.cursor = "grabbing";
       }}
       onDragEnd={(event, info) => {

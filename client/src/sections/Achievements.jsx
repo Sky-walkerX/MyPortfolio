@@ -45,34 +45,34 @@ export function DraggableCardDemo() {
     {
       title: "Odoo Hackathon",
       image:
-        "/assets/achievements/odoo.jpg",
+        "/assets/achievements/odoo.webp",
       className: "absolute top-16 right-[20%] rotate-[-4deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Qualified for the finals in Odoo Hackathon 2025 by building skill-swap platform",
     },
     {
       title: "Competitive Programming",
       image: 
-        "/assets/achievements/cp.png",
+        "/assets/achievements/cp.webp",
       className: "absolute top-48 left-[40%] rotate-[5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description:
       "Specialist on Codeforces with a highest rating of 1521, 4-star on CodeChef with a peak rating of 1812. Solved 1500+ algorithmic problems, demonstrating strong problem-solving skills.",
     },
     {
       title: "Meta Hacker Cup 2025",
-      image: "/assets/achievements/meta.png",
+      image: "/assets/achievements/meta.webp",
       className: "absolute top-14 right-[15%] rotate-[-6deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Achieved global rank 534 in Round 1 and 1434 in Round 2 of Meta Hacker Cup 2025.",
     },
     {
       title: "ICPC Prelims",
-      image: "/assets/achievements/icpc.png",
+      image: "/assets/achievements/icpc.webp",
       className: "absolute top-36 left-[18%] rotate-[5deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Secured rank #137 in ICPC India Regional Preliminary Contest, competing against top teams nationwide.",
     },
     {
       title: "Contributions in open source",
       image:
-        "/assets/achievements/open-source.png",
+        "/assets/achievements/open-source.webp",
       className: "absolute top-12 right-[30%] rotate-[3deg] w-72 p-4 bg-[var(--palette-dark-purple)] rounded-lg shadow-xl",
       description: "Impactful contributions in orgs such as Tauri, FreeCodeCamp, Checkmate, pgmpy, and many more"
     }
@@ -99,7 +99,8 @@ export function DraggableCardDemo() {
               <img
                 src={item.image}
                 alt={item.title}
-                className="pointer-events-none absolute top-0 left-0 w-full h-full object-cover" // Changed to object-cover
+                loading="lazy"
+                className="pointer-events-none absolute top-0 left-0 w-full h-full object-cover"
               />
             </div>
             <h3

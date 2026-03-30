@@ -15,7 +15,7 @@ const About = () => {
           header={
             <div className="flex justify-center items-center w-full sm:h-[276px] h-fit" style={{ marginBottom: '80px', marginTop: '55px' }}>
               <img
-                src="assets/profile.jpg"
+                src="assets/profile.webp"
                 alt="Naman Khandelwal"
                 className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-64 lg:h-64 rounded-full object-cover border-[3px] border-[#535C91] shadow-[0_0_20px_rgba(83,92,145,0.5)]"
               />
