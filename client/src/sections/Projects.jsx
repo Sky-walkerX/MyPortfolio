@@ -5,6 +5,15 @@ import { CardContainer, CardBody, CardItem } from '../components/3dCard';
 
 const projectsData = [
   {
+    id: 0,
+    title: "Skill-Swap",
+    description: "A peer-to-peer skill exchange platform that connects learners and mentors from across 50+ countries. Users can exchange expertise directly, set learning goals, track progress, and build lasting professional relationships. Powered by a high-performance Go backend with WebSocket real-time chat, modern Next.js frontend, and containerized deployment.",
+    imageUrl: "/projects/skill-swap.png",
+    liveLink: null,
+    repoLink: "https://github.com/Sky-walkerX/Skill-swap",
+    techStack: ["Go", "Gin", "Next.js", "TypeScript", "WebSocket", "Docker", "Tailwind CSS"]
+  },
+  {
     id: 1,
     title: "Zafkiel",
     description: "Zafkiel is a modern anime discovery and social interaction platform. It lets users explore anime entries, manage their watchlist, track progress, and interact with friends through social features — built with a robust Go + Rust backend and a sleek React frontend.",
