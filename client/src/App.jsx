@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import Hero from './sections/Hero.jsx';
 import SmoothScroll from './components/SmoothScroll.jsx';
+import Terminal from './components/Terminal.jsx';
 
 const About = lazy(() => import('./sections/About.jsx'));
 const ProjectsSection = lazy(() => import('./sections/Projects.jsx').then(m => ({ default: m.ProjectsSection })));
@@ -26,6 +27,7 @@ const App = () => {
         <Footer />
       </Suspense>
     </main>
+    <Terminal />
     </SmoothScroll>
   );
 };

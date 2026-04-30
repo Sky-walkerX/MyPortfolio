@@ -48,7 +48,7 @@ export function TimelineDemo() {
 
   return (
     // Wrap in a section for semantic meaning and consistent theming
-    <section className="bg-transparent py-16 md:py-24">
+    <section id="experience" className="bg-transparent py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8"> {/* Optional: for consistent padding */}
         
         <div className="relative w-full overflow-clip">

@@ -4,9 +4,23 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        generalsans: ['General Sans', 'sans-serif'],
+        generalsans: ['Bricolage Grotesque', 'General Sans', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'General Sans', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       colors: {
+        accent: {
+          DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
+          soft: 'hsl(var(--accent) / 0.15)',
+          glow: 'hsl(var(--accent) / 0.5)',
+        },
+        nebula: {
+          cyan: '#5EEAD4',
+          magenta: '#F0ABFC',
+          amber: '#FCD34D',
+          crimson: '#FB7185',
+          emerald: '#6EE7B7',
+        },
         black: {
           DEFAULT: '#000',
           100: '#010103',

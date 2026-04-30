@@ -79,7 +79,7 @@ export function DraggableCardDemo() {
   ];
 
   return (
-    <section className="bg-[var(--bg-original-dark)] py-12 md:py-20">
+    <section id="achievements" className="bg-[var(--bg-original-dark)] py-12 md:py-20">
       <h2 className="text-3xl md:text-4xl font-bold text-center text-[var(--text-on-dark)] mb-10 md:mb-16">
         Major <span className="text-[hsl(var(--primary))]">Achievements</span>
       </h2>

@@ -58,7 +58,7 @@ const BlogContent = ({ title, description, tags, blogLink }) => (
 
 export function BlogsSection() {
   return (
-    <section className="bg-[var(--bg-original-dark)] py-16 md:py-24 relative">
+    <section id="blogs" className="bg-[var(--bg-original-dark)] py-16 md:py-24 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16 md:mb-24">
           My <span className="text-[hsl(var(--primary))]">Blogs</span>

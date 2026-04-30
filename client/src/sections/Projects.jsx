@@ -130,7 +130,7 @@ const ProjectContent = ({ title, description, techStack, liveLink, repoLink }) =
 
 export function ProjectsSection() {
   return (
-    <section className="bg-[var(--bg-original-dark)] py-16 md:py-24 relative"> {/* Added relative for potential z-index children like Starfield */}
+    <section id="projects" className="bg-[var(--bg-original-dark)] py-16 md:py-24 relative"> {/* Added relative for potential z-index children like Starfield */}
       {/* If you want Starfield as a background for this section specifically: */}
       {/* <div className="absolute inset-0 -z-10"> */}
       {/* <Starfield /> */}
