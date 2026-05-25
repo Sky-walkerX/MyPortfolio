@@ -10,7 +10,7 @@ export const SITE = {
   twitter: "",
   github: "https://github.com/Sky-walkerX",
   githubHandle: "Sky-walkerX",
-  linkedin: "https://www.linkedin.com/in/naman-khandelwal/",
+  linkedin: "https://www.linkedin.com/in/naman-khandelwal-53161829a/",
   cfHandle: "SkywalkerX",
   resumePath: "/assets/Naman_Khandelwal_Resume.pdf",
 } as const;

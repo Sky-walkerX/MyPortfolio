@@ -30,7 +30,7 @@ export const PROJECTS: Project[] = [
       "Streaming pipeline using <strong>Server-Sent Events</strong> to deliver partial updates instantly to the Next.js frontend.",
     ],
     tags: ["next.js", "go", "nats", "postgres", "redis", "gemini"],
-    links: { source: "https://github.com/Sky-walkerX" },
+    links: { live: "https://www.trequila.tech/", source: "https://github.com/Sky-walkerX/trequila" },
     deepDive: {
       tagline: "AI travel planner · go + nats + next.js",
       problem:
@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
       "WebSocket Hub in Go with optimistic updates, typing indicators, multi-tab support, and <strong>LiveKit</strong>-powered video.",
     ],
     tags: ["next.js", "go", "gin", "postgres", "websocket", "livekit", "docker"],
-    links: { source: "https://github.com/Sky-walkerX" },
+    links: { source: "https://github.com/Sky-walkerX/Skill-swap" },
     deepDive: {
       tagline: "P2P skill exchange · e2ee + livekit",
       problem:
@@ -121,7 +121,7 @@ export const PROJECTS: Project[] = [
       "Credentials + OAuth (Google / GitHub) auth via NextAuth.",
     ],
     tags: ["next.js", "tailwind", "typescript", "prisma", "next-auth", "tanstack-query"],
-    links: { live: "https://github.com/Sky-walkerX", source: "https://github.com/Sky-walkerX" },
+    links: { live: "https://plan-wise-two.vercel.app/", source: "https://github.com/Sky-walkerX/PlanWise" },
     deepDive: {
       tagline: "gamified task manager · xp + heatmap",
       problem:
@@ -153,7 +153,7 @@ export const PROJECTS: Project[] = [
       "Express + Node backend; React frontend with Tailwind.",
     ],
     tags: ["react", "tailwind", "expressjs", "node.js", "typescript", "spotify-api"],
-    links: { live: "https://github.com/Sky-walkerX", source: "https://github.com/Sky-walkerX" },
+    links: { source: "https://github.com/Sky-walkerX/zonic" },
     deepDive: {
       tagline: "spotify-integrated music & podcasts",
       problem:
@@ -226,6 +226,7 @@ export const ACHIEVEMENTS: string[] = [
   "Finalist in the Odoo Hackathon — <strong>19,000+</strong> teams.",
   "Specialist on Codeforces (peak <strong>1526</strong>) · 4★ on CodeChef (peak <strong>1813</strong>).",
   "Rank 89 in CodeChef Starters 176 · Rank 103 in Starters 225 · Rank 104 in Starters 198.",
+  "<strong>Rank 1782</strong> in Codeforces Round 1009 (Div. 3) · <strong>Rank 1912</strong> in Educational Codeforces Round 186 (Div. 2).",
   "Contributions across <span class='hl'>tauri</span>, <span class='hl'>fedimint</span>, and <span class='hl'>Checkmate</span> ecosystems.",
 ];
 
@@ -238,48 +239,46 @@ export interface NotableContrib {
   url: string;
 }
 
-// PR numbers/titles are placeholders — fill in with real values.
-// Status: "merged" | "open" | "review"
 export const NOTABLE_CONTRIBS: NotableContrib[] = [
   {
     repo: "tauri-apps/tauri",
     org: "tauri",
-    number: null,
-    title: "TBD — fill in PR title",
+    number: 13830,
+    title: "feat(window): add macOS window::set_simple_fullscreen",
     status: "merged",
-    url: "https://github.com/tauri-apps/tauri/pulls?q=is%3Apr+author%3ASky-walkerX",
+    url: "https://github.com/tauri-apps/tauri/pull/13830",
   },
   {
-    repo: "fedimint/fedimint",
-    org: "fedimint",
-    number: null,
-    title: "TBD — fill in PR title",
+    repo: "tauri-apps/tauri",
+    org: "tauri",
+    number: 13618,
+    title: "fix(cli): prevent .app identifier",
     status: "merged",
-    url: "https://github.com/fedimint/fedimint/pulls?q=is%3Apr+author%3ASky-walkerX",
+    url: "https://github.com/tauri-apps/tauri/pull/13618",
   },
   {
     repo: "bluewave-labs/Checkmate",
     org: "checkmate",
-    number: null,
-    title: "TBD — fill in PR title",
+    number: 2504,
+    title: "refactor(settings): moved email settings toggle buttons to end of line",
     status: "merged",
-    url: "https://github.com/bluewave-labs/Checkmate/pulls?q=is%3Apr+author%3ASky-walkerX",
+    url: "https://github.com/bluewave-labs/Checkmate/pull/2504",
   },
   {
-    repo: "formstr-app/formstr",
-    org: "formstr",
-    number: null,
-    title: "TBD — fill in PR title",
+    repo: "fedimint/fedimint",
+    org: "fedimint",
+    number: 8377,
+    title: "feat: expose LNURL verify and pay methods to WASM",
     status: "merged",
-    url: "https://github.com/formstr-app/formstr/pulls?q=is%3Apr+author%3ASky-walkerX",
+    url: "https://github.com/fedimint/fedimint/pull/8377",
   },
   {
     repo: "formstr-hq/nostr-calendar",
     org: "formstr",
-    number: null,
-    title: "TBD — fill in PR title",
+    number: 89,
+    title: "feat: appointment scheduling",
     status: "merged",
-    url: "https://github.com/formstr-hq/nostr-calendar/pulls?q=is%3Apr+author%3ASky-walkerX",
+    url: "https://github.com/formstr-hq/nostr-calendar/pull/89",
   },
 ];
 
@@ -319,6 +318,12 @@ export interface Hackathon {
 }
 
 export const HACKATHONS: Hackathon[] = [
+  {
+    medal: "★",
+    name: "DevMatrix Hackathon",
+    sub: "<span class='acc'>Winner</span> · conducted by Axios · IIIT Lucknow · 2nd year category",
+    date: "2025",
+  },
   {
     medal: "★",
     name: "Odoo Hackathon",
