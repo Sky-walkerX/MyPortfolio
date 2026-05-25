@@ -229,6 +229,60 @@ export const ACHIEVEMENTS: string[] = [
   "Contributions across <span class='hl'>tauri</span>, <span class='hl'>fedimint</span>, and <span class='hl'>Checkmate</span> ecosystems.",
 ];
 
+export interface NotableContrib {
+  repo: string;
+  org: "tauri" | "fedimint" | "checkmate" | "formstr";
+  number: number | null;
+  title: string;
+  status: "merged" | "open" | "review";
+  url: string;
+}
+
+// PR numbers/titles are placeholders — fill in with real values.
+// Status: "merged" | "open" | "review"
+export const NOTABLE_CONTRIBS: NotableContrib[] = [
+  {
+    repo: "tauri-apps/tauri",
+    org: "tauri",
+    number: null,
+    title: "TBD — fill in PR title",
+    status: "merged",
+    url: "https://github.com/tauri-apps/tauri/pulls?q=is%3Apr+author%3ASky-walkerX",
+  },
+  {
+    repo: "fedimint/fedimint",
+    org: "fedimint",
+    number: null,
+    title: "TBD — fill in PR title",
+    status: "merged",
+    url: "https://github.com/fedimint/fedimint/pulls?q=is%3Apr+author%3ASky-walkerX",
+  },
+  {
+    repo: "bluewave-labs/Checkmate",
+    org: "checkmate",
+    number: null,
+    title: "TBD — fill in PR title",
+    status: "merged",
+    url: "https://github.com/bluewave-labs/Checkmate/pulls?q=is%3Apr+author%3ASky-walkerX",
+  },
+  {
+    repo: "formstr-app/formstr",
+    org: "formstr",
+    number: null,
+    title: "TBD — fill in PR title",
+    status: "merged",
+    url: "https://github.com/formstr-app/formstr/pulls?q=is%3Apr+author%3ASky-walkerX",
+  },
+  {
+    repo: "formstr-hq/nostr-calendar",
+    org: "formstr",
+    number: null,
+    title: "TBD — fill in PR title",
+    status: "merged",
+    url: "https://github.com/formstr-hq/nostr-calendar/pulls?q=is%3Apr+author%3ASky-walkerX",
+  },
+];
+
 export interface Blog {
   meta: string;
   title: string;

@@ -26,6 +26,11 @@ export function Topbar() {
     window.dispatchEvent(new Event("nk:open-palette"));
   };
 
+  const openTweaks = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.dispatchEvent(new Event("nk:open-tweaks"));
+  };
+
   return (
     <header className="topbar">
       <div className="topbar-inner">
@@ -57,6 +62,15 @@ export function Topbar() {
           <span className="uptime hide-sm" title="session uptime">
             uptime <span>{uptime}</span>
           </span>
+          <a
+            href="#"
+            onClick={openTweaks}
+            className="k gear"
+            aria-label="Open tweaks panel"
+            title="tweaks · theme · density"
+          >
+            <span>⚙</span>
+          </a>
           <a href="#" onClick={openPalette} className="k" aria-label="Open command palette">
             <span>⌘</span>
             <kbd>K</kbd>

@@ -1,6 +1,7 @@
 import { SectionHead } from "./Prompt";
 import { Heatmap } from "./Heatmap";
 import { loadStats, type PullRequest } from "@/lib/stats";
+import { NOTABLE_CONTRIBS, type NotableContrib } from "@/lib/data";
 
 function relativeTime(iso: string) {
   if (!iso) return "";
@@ -13,6 +14,41 @@ function relativeTime(iso: string) {
   if (diff < 86400 * 30) return `${Math.floor(diff / 86400)}d ago`;
   if (diff < 86400 * 365) return `${Math.floor(diff / (86400 * 30))}mo ago`;
   return `${Math.floor(diff / (86400 * 365))}y ago`;
+}
+
+const ORG_GLYPHS: Record<NotableContrib["org"], string> = {
+  tauri: "◆",
+  fedimint: "⬢",
+  checkmate: "✓",
+  formstr: "▤",
+};
+
+function NotableContribs({ items }: { items: NotableContrib[] }) {
+  return (
+    <div className="prs-card">
+      <div className="ghead">
+        <span className="glyph">★</span> notable OSS contributions{" "}
+        <small>tauri · fedimint · checkmate · formstr</small>
+      </div>
+      <ul className="pr-list">
+        {items.map((c, i) => (
+          <li key={`${c.repo}-${i}`} className="pr-item">
+            <a href={c.url} target="_blank" rel="noopener noreferrer" className="pr-link">
+              <span className="pr-repo">
+                <span className="org-glyph" aria-hidden="true">
+                  {ORG_GLYPHS[c.org]}
+                </span>
+                {c.repo}
+                {c.number !== null ? ` #${c.number}` : ""}
+              </span>
+              <span className={`pr-time pr-status-${c.status}`}>{c.status}</span>
+              <span className="pr-title">{c.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 function RecentPRs({ prs }: { prs: PullRequest[] }) {
@@ -60,7 +96,7 @@ export async function Stats() {
       />
 
       <div className="stats-grid r">
-        <div>
+        <div className="heatmaps-stack">
           <div className="heatmap-card">
             <h4>
               <span className="glyph">▮</span> codeforces <span className="handle">(SkywalkerX)</span>
@@ -109,80 +145,81 @@ export async function Stats() {
               <span>more</span>
             </div>
           </div>
+          <NotableContribs items={NOTABLE_CONTRIBS} />
         </div>
 
         <div className="ratings-stack">
-          <div className="ratings-card">
-            <div className="group">
-              <div className="ghead">
-                <span className="glyph">▮</span> codeforces <small>specialist</small>
-              </div>
-              <div className="row">
-                <span className="k">rating</span>
-                <span className="v">{cf?.rating ?? 1437}</span>
-              </div>
-              <div className="row">
-                <span className="k">max</span>
-                <span className="v">{cf?.maxRating ?? 1526}</span>
-              </div>
-              <div className="row">
-                <span className="k">rank</span>
-                <span className="v acc">{cf?.rank ?? "Specialist"}</span>
-              </div>
+        <div className="ratings-card">
+          <div className="group">
+            <div className="ghead">
+              <span className="glyph">▮</span> codeforces <small>specialist</small>
             </div>
-
-            <div className="group">
-              <div className="ghead">
-                <span className="glyph">◆</span> leetcode <small>knight</small>
-              </div>
-              <div className="row">
-                <span className="k">rating</span>
-                <span className="v">1945</span>
-              </div>
-              <div className="row">
-                <span className="k">badge</span>
-                <span className="v warn">Knight</span>
-              </div>
+            <div className="row">
+              <span className="k">rating</span>
+              <span className="v">{cf?.rating ?? 1437}</span>
             </div>
-
-            <div className="group">
-              <div className="ghead">
-                <span className="glyph">◉</span> codechef <small>4★</small>
-              </div>
-              <div className="row">
-                <span className="k">rating</span>
-                <span className="v">1812</span>
-              </div>
-              <div className="row">
-                <span className="k">peak</span>
-                <span className="v">1813</span>
-              </div>
-              <div className="row">
-                <span className="k">stars</span>
-                <span className="v">
-                  <span className="star">★★★★</span>
-                </span>
-              </div>
+            <div className="row">
+              <span className="k">max</span>
+              <span className="v">{cf?.maxRating ?? 1526}</span>
             </div>
-
-            <div className="group">
-              <div className="ghead">
-                <span className="glyph">✓</span> github
-              </div>
-              <div className="row">
-                <span className="k">repos</span>
-                <span className="v">{gh?.publicRepos ?? "—"}</span>
-              </div>
-              <div className="row">
-                <span className="k">followers</span>
-                <span className="v">{gh?.followers ?? "—"}</span>
-              </div>
-              <div className="row">
-                <span className="k">following</span>
-                <span className="v">{gh?.following ?? "—"}</span>
-              </div>
+            <div className="row">
+              <span className="k">rank</span>
+              <span className="v acc">{cf?.rank ?? "Specialist"}</span>
             </div>
           </div>
+
+          <div className="group">
+            <div className="ghead">
+              <span className="glyph">◆</span> leetcode <small>knight</small>
+            </div>
+            <div className="row">
+              <span className="k">rating</span>
+              <span className="v">1945</span>
+            </div>
+            <div className="row">
+              <span className="k">badge</span>
+              <span className="v warn">Knight</span>
+            </div>
+          </div>
+
+          <div className="group">
+            <div className="ghead">
+              <span className="glyph">◉</span> codechef <small>4★</small>
+            </div>
+            <div className="row">
+              <span className="k">rating</span>
+              <span className="v">1812</span>
+            </div>
+            <div className="row">
+              <span className="k">peak</span>
+              <span className="v">1813</span>
+            </div>
+            <div className="row">
+              <span className="k">stars</span>
+              <span className="v">
+                <span className="star">★★★★</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="group">
+            <div className="ghead">
+              <span className="glyph">✓</span> github
+            </div>
+            <div className="row">
+              <span className="k">repos</span>
+              <span className="v">{gh?.publicRepos ?? "—"}</span>
+            </div>
+            <div className="row">
+              <span className="k">followers</span>
+              <span className="v">{gh?.followers ?? "—"}</span>
+            </div>
+            <div className="row">
+              <span className="k">following</span>
+              <span className="v">{gh?.following ?? "—"}</span>
+            </div>
+          </div>
+        </div>
           <RecentPRs prs={prs} />
         </div>
       </div>
