@@ -15,6 +15,7 @@ import {
   Skills,
 } from "@/components/Sections";
 import { Snake } from "@/components/Snake";
+import { Stats } from "@/components/Stats";
 import { Topbar } from "@/components/Topbar";
 import { Tweaks } from "@/components/Tweaks";
 
@@ -29,6 +30,7 @@ export default function Page() {
         <Hero />
         <About />
         <Experience />
+        <Stats />
         <Projects />
         <Hackathons />
         <Skills />
