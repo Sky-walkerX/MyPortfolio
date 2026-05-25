@@ -1,5 +1,9 @@
+import { BootSequence } from "@/components/BootSequence";
+import { CommandPalette } from "@/components/CommandPalette";
 import { Footer } from "@/components/Footer";
+import { GlobalEffects } from "@/components/GlobalEffects";
 import { Hero } from "@/components/Hero";
+import { Matrix } from "@/components/Matrix";
 import { QuickFab } from "@/components/QuickFab";
 import {
   About,
@@ -10,11 +14,16 @@ import {
   Projects,
   Skills,
 } from "@/components/Sections";
+import { Snake } from "@/components/Snake";
 import { Topbar } from "@/components/Topbar";
+import { Tweaks } from "@/components/Tweaks";
+
+export const revalidate = 3600;
 
 export default function Page() {
   return (
     <>
+      <BootSequence />
       <Topbar />
       <main id="top">
         <Hero />
@@ -28,6 +37,11 @@ export default function Page() {
         <Footer />
       </main>
       <QuickFab />
+      <CommandPalette />
+      <Snake />
+      <Matrix />
+      <Tweaks />
+      <GlobalEffects />
     </>
   );
 }
