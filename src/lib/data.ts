@@ -1,3 +1,12 @@
+export interface ProjectDeepDive {
+  tagline: string;
+  problem: string;
+  architecture: string;
+  systemDesign: string[];
+  challenges: string[];
+  diagram?: string;
+}
+
 export interface Project {
   num: string;
   name: string;
@@ -6,6 +15,7 @@ export interface Project {
   bullets: string[];
   tags: string[];
   links: { live?: string; source: string };
+  deepDive: ProjectDeepDive;
 }
 
 export const PROJECTS: Project[] = [
@@ -21,6 +31,39 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["next.js", "go", "nats", "postgres", "redis", "gemini"],
     links: { source: "https://github.com/Sky-walkerX" },
+    deepDive: {
+      tagline: "AI travel planner · go + nats + next.js",
+      problem:
+        "Generating a full trip itinerary needs to fan out to many slow upstreams (LLM, places, weather, photos). A single linear request blocks for 15+ seconds. Users want progressive results that feel instant.",
+      architecture:
+        "Event-driven Go backend. Each prompt produces a TripPlan event on NATS JetStream. Parallel micro-workers (placesWorker, weatherWorker, photoWorker, geminiWorker) consume the event, fan out to upstream APIs, and publish partial results on per-trip subjects. A frontend gateway streams the merged stream over SSE to a Next.js client.",
+      systemDesign: [
+        "Producer: Next.js API route validates the prompt, persists a TripPlan row in Postgres (status=draft), and publishes trip.plan.requested to JetStream.",
+        "Consumers: 4 independent worker pools subscribed via durable consumers — at-least-once delivery, ack on success, redelivery on failure.",
+        "Cache: Redis stores upstream API responses (place IDs, weather, photo URLs) keyed by (provider, query). Saves ~70% of repeat calls.",
+        "Circuit breaker: a failing upstream (e.g. Gemini overload) trips after 5 consecutive 5xx — the gateway falls back to a cached/cheaper provider and the trip still completes.",
+        "SSE gateway: subscribes to trip.<id>.* and pipes events to the client. Reconnect-safe via Last-Event-ID.",
+      ],
+      challenges: [
+        "Ordering partial updates so the UI doesn't flash old data — solved with monotonically-increasing per-trip sequence numbers.",
+        "Handling upstream cost spikes — hard cap on Gemini tokens per trip, surfaced as a soft warning in the UI.",
+      ],
+      diagram: `┌──────────────┐  prompt   ┌────────────┐  publish    ┌──────────────────────┐
+│ Next.js page │ ────────▶ │ /api/plan  │ ───────────▶ │ NATS JetStream       │
+└──────────────┘           └────────────┘              │  trip.plan.requested │
+        ▲                                              └──────────┬───────────┘
+        │ SSE stream                                              │ fan-out
+        │                                                         ▼
+┌───────┴───────┐  subscribe   ┌──────────────────────────────────────────────┐
+│ SSE gateway   │ ◀──────────  │ places · weather · photos · gemini workers   │
+└───────────────┘              └──────────────────┬───────────────────────────┘
+                                                  │
+                                  ┌───────────────┴──────────────┐
+                                  ▼                              ▼
+                          ┌───────────────┐              ┌──────────────┐
+                          │ Postgres      │              │ Redis cache  │
+                          └───────────────┘              └──────────────┘`,
+    },
   },
   {
     num: "[002]",
@@ -34,6 +77,37 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["next.js", "go", "gin", "postgres", "websocket", "livekit", "docker"],
     links: { source: "https://github.com/Sky-walkerX" },
+    deepDive: {
+      tagline: "P2P skill exchange · e2ee + livekit",
+      problem:
+        "Strangers swap skills over 1:1 chat and video. Messages must be unreadable to the server, video must connect in under a second, and the experience must survive multi-tab sessions and flaky networks.",
+      architecture:
+        "Go (Gin) backend with a WebSocket Hub for chat, and a thin REST layer for LiveKit room tokens. End-to-end encryption is client-side only — keys never touch the server. Postgres stores ciphertext, public keys, and metadata.",
+      systemDesign: [
+        "Key exchange: X25519 ECDH on the client. Each user has a long-lived identity keypair and a per-session ephemeral pair. Shared secret derives the symmetric key.",
+        "Cipher: XSalsa20-Poly1305 via TweetNaCl. Server only sees ciphertext + nonce + sender pubkey.",
+        "Hub: in-memory map of userId → []*conn. Broadcast goroutine fans messages out to all of a user's tabs. Backpressure via per-conn buffered send channel; slow consumers are dropped, not blocked.",
+        "Delivery: messages are acked once persisted. Typing indicators are ephemeral pubsub, not stored.",
+        "Video: server mints a LiveKit JWT scoped to a single room. Clients negotiate SFU directly with LiveKit — server is out of the data path.",
+      ],
+      challenges: [
+        "Optimistic UI vs ordering: client renders the message instantly, then reconciles with the server's canonical timestamp. Race resolved by client-generated UUIDs.",
+        "Multi-tab consistency: the hub broadcasts to every open conn; each tab reconciles independently against IndexedDB.",
+      ],
+      diagram: `Client A                       Server (Gin + Hub)                        Client B
+   │       WS upgrade  ─▶                  │                                  │
+   │  ◀── auth ok                          │                                  │
+   │                                       │                                  │
+   │  encrypt(msg, sharedKey)              │                                  │
+   │  ───────────────▶ ciphertext          │   route to userId=B              │
+   │                                       │   broadcast to B's conns ─────▶  │
+   │                                       │                                  │  decrypt(ciphertext, sharedKey)
+   │  ◀──── ack (server-side timestamp) ── │                                  │
+   │                                       │                                  │
+   │       ─────── LiveKit token ─────▶    │                                  │
+   │  ◀────── room JWT                     │                                  │
+   │     ───────── SFU media (E2E SRTP) ───────────────────────────────────▶  │`,
+    },
   },
   {
     num: "[003]",
@@ -48,6 +122,24 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["next.js", "tailwind", "typescript", "prisma", "next-auth", "tanstack-query"],
     links: { live: "https://github.com/Sky-walkerX", source: "https://github.com/Sky-walkerX" },
+    deepDive: {
+      tagline: "gamified task manager · xp + heatmap",
+      problem:
+        "Most TODO apps fail because they don't reward consistency. Planwise treats task completion as XP, levels, and a streak heatmap — making habit-formation visible.",
+      architecture:
+        "Single Next.js app on the App Router with Server Actions for mutations. Prisma + Postgres for the data layer. Tanstack Query for optimistic UI on the client. NextAuth for credentials + OAuth (Google, GitHub).",
+      systemDesign: [
+        "Schema: User → Tasks (1:N), User → XPEvents (1:N). Tasks carry a difficulty enum that maps to an XP table.",
+        "XP / level: pure derived value — XPEvents are append-only, current level is computed at read time. Avoids drift and supports retroactive corrections.",
+        "Streak heatmap: a single SQL view aggregates task completions by day. Cached in Tanstack Query, invalidated on mutation.",
+        "Auth: NextAuth with the Prisma adapter. Credentials hashed via Argon2id. OAuth callbacks linked to the same user by email.",
+        "Optimistic updates: complete-task mutates the cache immediately, server action returns the canonical XP delta, cache reconciles.",
+      ],
+      challenges: [
+        "Preventing XP farming via rapid create-complete cycles — server-side daily XP cap per difficulty bucket.",
+        "Designing the difficulty curve so leveling stays satisfying past level 30 — exponential XP-per-level with a flat ceiling on daily gain.",
+      ],
+    },
   },
   {
     num: "[004]",
@@ -62,6 +154,23 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["react", "tailwind", "expressjs", "node.js", "typescript", "spotify-api"],
     links: { live: "https://github.com/Sky-walkerX", source: "https://github.com/Sky-walkerX" },
+    deepDive: {
+      tagline: "spotify-integrated music & podcasts",
+      problem:
+        "Spotify is a great player but a thin information layer. Listening should pull in the artist's recent news, related media, and even the weather where they're from — without leaving the player.",
+      architecture:
+        "React + Vite SPA fronts an Express/Node backend that brokers Spotify OAuth and fans out to contextual data sources (news, weather, GIF). The frontend never sees a Spotify secret; the backend owns the refresh-token loop.",
+      systemDesign: [
+        "OAuth: Authorization Code with PKCE. Backend stores the refresh token in an HTTP-only cookie session; the frontend gets a short-lived access token.",
+        "Playback: SDK runs in the browser. Backend issues device-control intents (play/pause/seek) only after validating the session.",
+        "Context fanout: on track change the frontend asks /api/context?artist=… ; backend hits News API, OpenWeather, and Giphy in parallel and returns a merged payload.",
+        "Caching: in-memory LRU (5-min TTL) keyed by artist — keeps external API spend predictable when users repeatedly skip back.",
+      ],
+      challenges: [
+        "Token refresh while music is playing — backend rotates tokens in the background and pushes the new access token over Server-Sent Events.",
+        "Rate-limit budgeting across 3 free-tier APIs — single context request batches all three providers and surfaces a partial response if any fails.",
+      ],
+    },
   },
 ];
 

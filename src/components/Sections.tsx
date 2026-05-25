@@ -1,5 +1,6 @@
 import { SectionHead } from "./Prompt";
 import { PaletteButton } from "./PaletteButton";
+import { ProjectDetailsButton } from "./ProjectDetailsButton";
 import {
   ACHIEVEMENTS,
   BLOGS,
@@ -169,6 +170,7 @@ export function Projects() {
                 ))}
               </div>
               <div className="proj-links">
+                <ProjectDetailsButton project={p} />
                 {p.links.live && (
                   <a href={p.links.live} target="_blank" rel="noopener noreferrer" aria-label="View live">
                     <ExternalIcon />
@@ -185,8 +187,9 @@ export function Projects() {
         ))}
       </div>
       <p style={{ color: "var(--fg-4)", fontSize: 12, margin: "18px 0 0" }}>
-        # tip: every section is keyboard-driven — type <span style={{ color: "var(--accent)" }}>view trequila</span>{" "}
-        in the terminal for a deep-dive.
+        # tip: tap <span style={{ color: "var(--accent)" }}>deep-dive</span> on any project for
+        architecture + system design, or type <span style={{ color: "var(--accent)" }}>view trequila</span> in
+        the terminal.
       </p>
     </section>
   );

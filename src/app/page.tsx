@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { GlobalEffects } from "@/components/GlobalEffects";
 import { Hero } from "@/components/Hero";
 import { Matrix } from "@/components/Matrix";
+import { ProjectModal } from "@/components/ProjectModal";
 import { QuickFab } from "@/components/QuickFab";
 import {
   About,
@@ -40,6 +41,7 @@ export default function Page() {
       </main>
       <QuickFab />
       <CommandPalette />
+      <ProjectModal />
       <Snake />
       <Matrix />
       <Tweaks />
