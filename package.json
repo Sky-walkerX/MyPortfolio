@@ -1,0 +1,33 @@
+{
+  "name": "nk-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Naman Khandelwal — terminal-themed portfolio. Next.js 16 + Tailwind CSS v4.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^16.2.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^16.2.2",
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.20.0",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
