@@ -2477,20 +2477,23 @@ body[data-motion="off"] *::after {
   pointer-events: none;
   z-index: 99999;
   will-change: transform, opacity;
+  opacity: 0; /* hidden until JS sets it */
 }
 
+/* 8px solid square dot — snaps to pointer instantly */
 .nk-cursor-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   background: var(--accent);
-  /* no border-radius — square terminal block */
+  box-shadow: 0 0 6px 1px var(--accent);
 }
 
+/* 30px hollow square ring — lerps behind the dot */
 .nk-cursor-ring {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border: 1.5px solid var(--accent);
-  /* square ring to match terminal aesthetic */
+  box-shadow: 0 0 8px 0px var(--accent), inset 0 0 4px 0px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
