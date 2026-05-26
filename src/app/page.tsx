@@ -1,4 +1,5 @@
 import { BootSequence } from "@/components/BootSequence";
+import { CustomCursor } from "@/components/CustomCursor";
 import { CommandPalette } from "@/components/CommandPalette";
 import { Footer } from "@/components/Footer";
 import { GlobalEffects } from "@/components/GlobalEffects";
@@ -46,6 +47,7 @@ export default function Page() {
       <Matrix />
       <Tweaks />
       <GlobalEffects />
+      <CustomCursor />
     </>
   );
 }

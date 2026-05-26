@@ -2464,6 +2464,35 @@ body[data-motion="off"] *::after {
   }
 }
 
+/* ── custom cursor ─────────────────────────────────────────────────────── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+.nk-cursor-dot,
+.nk-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform, opacity;
+}
+
+.nk-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  /* no border-radius — square terminal block */
+}
+
+.nk-cursor-ring {
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--accent);
+  /* square ring to match terminal aesthetic */
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
