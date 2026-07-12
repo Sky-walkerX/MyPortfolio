@@ -89,7 +89,7 @@ export function CommandPalette() {
       append(`<span class="hl">Naman Khandelwal</span>
 3rd year CS @ <span class="acc">IIIT Lucknow</span> · GPA 8.90
 Currently: <span class="acc">Summer of Bitcoin</span> intern @ Formstr
-Specialist on CF · 4★ on CodeChef · Google CTF rank 146`),
+Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
 
     about: () =>
       append(`<span class="hl">~/about.md</span>
@@ -109,9 +109,8 @@ Specialist on CF · 4★ on CodeChef · Google CTF rank 146`),
         return append(`<table>
 <tr><td>001</td><td><span class="acc">trequila/</span></td><td class="muted">AI travel planner</td></tr>
 <tr><td>002</td><td><span class="acc">skillswap/</span></td><td class="muted">P2P skill exchange · e2ee + livekit</td></tr>
-<tr><td>003</td><td><span class="acc">planwise/</span></td><td class="muted">gamified task manager</td></tr>
-<tr><td>004</td><td><span class="acc">zonic/</span></td><td class="muted">spotify music + podcasts</td></tr>
-<tr><td>005</td><td><span class="acc">odoo-finalist/</span></td><td class="muted">19k+ teams</td></tr>
+<tr><td>003</td><td><span class="acc">lockin/</span></td><td class="muted">study & resource hub</td></tr>
+<tr><td>004</td><td><span class="acc">odoo-finalist/</span></td><td class="muted">19k+ teams</td></tr>
 </table>
 <span class="muted"># view &lt;name&gt; for details · open &lt;name&gt; to open</span>`);
       }
@@ -204,8 +203,7 @@ ${links}`);
       const map: Record<string, string> = {
         trequila: SITE.github,
         skillswap: SITE.github,
-        planwise: SITE.github,
-        zonic: SITE.github,
+        lockin: "https://github.com/Sky-walkerX/LockIn",
         odoo: SITE.github,
         github: SITE.github,
         linkedin: SITE.linkedin,
@@ -279,8 +277,9 @@ ${links}`);
   <span class="ok">✔</span> Google CTF — <span class="hl">rank 146</span> globally
   <span class="ok">✔</span> Meta Hacker Cup 2025 — <span class="hl">534</span> R1 · <span class="hl">1434</span> R2
   <span class="ok">✔</span> Odoo Hackathon Finalist — <span class="hl">19k+</span> teams
-  <span class="ok">✔</span> Codeforces Specialist — peak <span class="hl">1526</span>
+  <span class="ok">✔</span> Codeforces Expert — peak <span class="hl">1623</span>
   <span class="ok">✔</span> CodeChef 4★ — peak <span class="hl">1813</span>
+  <span class="ok">✔</span> LeetCode Knight — peak <span class="hl">1945</span>
   <span class="ok">✔</span> CodeChef Starters — rank 89 / 103 / 104
   <span class="ok">✔</span> OSS contributions to tauri, fedimint, Checkmate`),
 
@@ -502,6 +501,7 @@ ${links}`);
       "blogs",
       "trequila",
       "skillswap",
+      "lockin",
       "odoo",
       "about.md",
       "resume.pdf",

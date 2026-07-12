@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
       "WebSocket Hub in Go with optimistic updates, typing indicators, multi-tab support, and <strong>LiveKit</strong>-powered video.",
     ],
     tags: ["next.js", "go", "gin", "postgres", "websocket", "livekit", "docker"],
-    links: { source: "https://github.com/Sky-walkerX/Skill-swap" },
+    links: { live: "https://skillswap.anirudhrajora.dev/", source: "https://github.com/Sky-walkerX/Skill-swap" },
     deepDive: {
       tagline: "P2P skill exchange · e2ee + livekit",
       problem:
@@ -111,65 +111,40 @@ export const PROJECTS: Project[] = [
   },
   {
     num: "[003]",
-    name: "planwise",
+    name: "lockin",
     status: "live",
     description:
-      "A gamified task management app that helps you stay organized, set priorities, and track progress — with XP, levels, and a daily heatmap to keep you motivated.",
+      "A personal study & resource hub organized around Subjects — plan milestones, stash resources, and track focus time. You're the brain; LockIn is the shelf + planner, not an AI generator.",
     bullets: [
-      "Gamified progress system — <strong>XP per task</strong>, level progression, daily streak heatmap.",
-      "Type-safe data layer with <strong>Prisma + Tanstack Query</strong> for optimistic mutations.",
-      "Credentials + OAuth (Google / GitHub) auth via NextAuth.",
+      "One component tree, two looks via <strong>next-themes</strong> — Creative (light, neobrutalist) and Focus (dark, editor-calm).",
+      "Cross-subject <strong>Today</strong> view for due/overdue tasks; a Pomodoro/stopwatch focus timer logs time per task into a GitHub-style heatmap.",
     ],
-    tags: ["next.js", "tailwind", "typescript", "prisma", "next-auth", "tanstack-query"],
-    links: { live: "https://plan-wise-two.vercel.app/", source: "https://github.com/Sky-walkerX/PlanWise" },
+    tags: ["next.js", "react", "typescript", "prisma", "postgres", "next-auth", "tanstack-query", "tailwind"],
+    links: { live: "https://lockin.namankhandelwal.dev/", source: "https://github.com/Sky-walkerX/LockIn" },
     deepDive: {
-      tagline: "gamified task manager · xp + heatmap",
+      tagline: "study & resource hub · subjects → milestones → tasks",
       problem:
-        "Most TODO apps fail because they don't reward consistency. Planwise treats task completion as XP, levels, and a streak heatmap — making habit-formation visible.",
+        "Most study tools are either dumb TODO lists or AI generators that do your thinking for you. LockIn keeps the human as the brain: one place to organize learning around Subjects, break each into ordered Milestones and Tasks, save resources, and see what's due today across everything.",
       architecture:
-        "Single Next.js app on the App Router with Server Actions for mutations. Prisma + Postgres for the data layer. Tanstack Query for optimistic UI on the client. NextAuth for credentials + OAuth (Google, GitHub).",
+        "Single Next.js App-Router app (React 19, TypeScript). Prisma + Postgres model a strict Subject → Milestone → Task → TimerSession tree (plus Subject → Resource). NextAuth v4 (JWT) for auth, TanStack Query for the data layer, and shadcn/ui + Tailwind v4 + next-themes for a two-mode design system.",
       systemDesign: [
-        "Schema: User → Tasks (1:N), User → XPEvents (1:N). Tasks carry a difficulty enum that maps to an XP table.",
-        "XP / level: pure derived value — XPEvents are append-only, current level is computed at read time. Avoids drift and supports retroactive corrections.",
-        "Streak heatmap: a single SQL view aggregates task completions by day. Cached in Tanstack Query, invalidated on mutation.",
-        "Auth: NextAuth with the Prisma adapter. Credentials hashed via Argon2id. OAuth callbacks linked to the same user by email.",
-        "Optimistic updates: complete-task mutates the cache immediately, server action returns the canonical XP delta, cache reconciles.",
+        "Data model: User → Subject → Milestone → Task → TimerSession, and Subject → Resource. Milestone/subject progress is derived (% of tasks done), never stored — no drift.",
+        "Ownership scoping: every write is Prisma-scoped to the JWT's user; Milestones (no userId) are scoped through their parent subject.",
+        "Two-mode theming: the same component tree renders Creative (light, neobrutalist) or Focus (dark, editor) purely via CSS tokens flipped by next-themes — per-subject accent colors auto-soften in Focus.",
+        "Focus timer: POST /api/tasks/[id]/timer start/stop closes the open session and increments the task's time-spent in a single transaction.",
+        "Today view: one /api/tasks?today=true query returns incomplete tasks due by end-of-day across all subjects.",
       ],
       challenges: [
-        "Preventing XP farming via rapid create-complete cycles — server-side daily XP cap per difficulty bucket.",
-        "Designing the difficulty curve so leveling stays satisfying past level 30 — exponential XP-per-level with a flat ceiling on daily gain.",
+        "Deriving progress, streaks, and focus minutes from an append-only task/timer history instead of stored counters — kills the drift that plagued the gamified predecessor.",
+        "A `$` in the Postgres password silently broke runtime auth (Next.js dotenv-expand mangles `$`) — fixed by percent-encoding it as %24 in DATABASE_URL.",
       ],
-    },
-  },
-  {
-    num: "[004]",
-    name: "zonic",
-    status: "live",
-    description:
-      "A Spotify-integrated web app for music and podcasts — browse your library and play tracks, with contextual insights like artist news, weather, and related GIFs.",
-    bullets: [
-      "OAuth flow against the <strong>Spotify Web API</strong> — library browse + playback control.",
-      "Contextual data fanout: artist news, weather, and related GIFs alongside each track.",
-      "Express + Node backend; React frontend with Tailwind.",
-    ],
-    tags: ["react", "tailwind", "expressjs", "node.js", "typescript", "spotify-api"],
-    links: { source: "https://github.com/Sky-walkerX/zonic" },
-    deepDive: {
-      tagline: "spotify-integrated music & podcasts",
-      problem:
-        "Spotify is a great player but a thin information layer. Listening should pull in the artist's recent news, related media, and even the weather where they're from — without leaving the player.",
-      architecture:
-        "React + Vite SPA fronts an Express/Node backend that brokers Spotify OAuth and fans out to contextual data sources (news, weather, GIF). The frontend never sees a Spotify secret; the backend owns the refresh-token loop.",
-      systemDesign: [
-        "OAuth: Authorization Code with PKCE. Backend stores the refresh token in an HTTP-only cookie session; the frontend gets a short-lived access token.",
-        "Playback: SDK runs in the browser. Backend issues device-control intents (play/pause/seek) only after validating the session.",
-        "Context fanout: on track change the frontend asks /api/context?artist=… ; backend hits News API, OpenWeather, and Giphy in parallel and returns a merged payload.",
-        "Caching: in-memory LRU (5-min TTL) keyed by artist — keeps external API spend predictable when users repeatedly skip back.",
-      ],
-      challenges: [
-        "Token refresh while music is playing — backend rotates tokens in the background and pushes the new access token over Server-Sent Events.",
-        "Rate-limit budgeting across 3 free-tier APIs — single context request batches all three providers and surfaces a partial response if any fails.",
-      ],
+      diagram: `User
+ └─ Subject ("Operating Systems")
+     ├─ Milestone (notes.md) ──< Task ──< TimerSession
+     │                            priority · dueDate
+     └─ Resource  (LINK · AI_CHAT · PDF · BOOK)
+
+Today  ◀──  tasks where dueDate ≤ end-of-day, across all subjects`,
     },
   },
 ];
@@ -189,8 +164,9 @@ export const EXPERIENCES: Experience[] = [
     company: "Formstr",
     date: "May 2026 — Present",
     bullets: [
-      "Building the <strong>Formstr Super App</strong> — a unified platform for calendar events, private notes, file management, forms, and analytics, with AI as the interface layer.",
-      'Contributed <strong>35+ PRs</strong> across core repositories. <a href="https://github.com/Sky-walkerX" target="_blank" rel="noopener">view contributions →</a>',
+      "Building the <strong>Formstr Super App</strong> — book events, manage files, create forms, and view analytics with AI as the interface, powered by <strong>MCP tool calling</strong>.",
+      "Built <strong>@formstr/mcp</strong> (MCP server exposing the super-app to LLM hosts over stdio with secure auth) and <strong>@formstr/calendar-sdk</strong> (npm package for encrypted Nostr calendar events + RSVPs); authored <strong>700+ Vitest tests</strong>.",
+      'Contributed <strong>50+ merged PRs</strong> across core repositories. <a href="https://github.com/Sky-walkerX" target="_blank" rel="noopener">view contributions →</a>',
     ],
   },
   {
@@ -224,9 +200,9 @@ export const ACHIEVEMENTS: string[] = [
   "<strong>Rank 146</strong> globally in Google CTF.",
   "<strong>534th</strong> globally in Meta Hacker Cup 2025 Round 1 · 1434th in Round 2.",
   "Finalist in the Odoo Hackathon — <strong>19,000+</strong> teams.",
-  "Specialist on Codeforces (peak <strong>1526</strong>) · 4★ on CodeChef (peak <strong>1813</strong>).",
+  "Expert on Codeforces (peak <strong>1623</strong>) · 4★ on CodeChef (peak <strong>1813</strong>) · Knight on LeetCode (peak <strong>1945</strong>).",
   "Rank 89 in CodeChef Starters 176 · Rank 103 in Starters 225 · Rank 104 in Starters 198.",
-  "<strong>Rank 1782</strong> in Codeforces Round 1009 (Div. 3) · <strong>Rank 1912</strong> in Educational Codeforces Round 186 (Div. 2).",
+  "<strong>Rank 399</strong> in Educational Codeforces Round 191 (Div. 2) · <strong>Rank 926</strong> in Codeforces Round 1103 (Div. 3).",
   "Contributions across <span class='hl'>tauri</span>, <span class='hl'>fedimint</span>, and <span class='hl'>Checkmate</span> ecosystems.",
 ];
 
@@ -318,6 +294,18 @@ export interface Hackathon {
 }
 
 export const HACKATHONS: Hackathon[] = [
+  {
+    medal: "★",
+    name: "Flipkart Gridlock 2026",
+    sub: "<span class='acc'>1st in Round 1</span> · through to the prototype round",
+    date: "2026",
+  },
+  {
+    medal: "★",
+    name: "Amazon HackOn 2026",
+    sub: "<span class='acc'>Top 300 teams</span> · shortlisted nationally",
+    date: "2026",
+  },
   {
     medal: "★",
     name: "DevMatrix Hackathon",

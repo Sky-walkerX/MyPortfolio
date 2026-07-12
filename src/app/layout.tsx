@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 };
 
 const SEO_DESCRIPTION =
-  "Naman Khandelwal — Full-Stack Developer & CS student at IIIT Lucknow (2024–2028). Summer of Bitcoin intern at Formstr. Builds Go + Next.js systems, contributes to tauri, fedimint, and Checkmate. Codeforces Specialist · LeetCode Knight · Google CTF Rank 146.";
+  "Naman Khandelwal — Full-Stack Developer & CS student at IIIT Lucknow (2024–2028). Summer of Bitcoin intern at Formstr. Builds Go + Next.js systems, contributes to tauri, fedimint, and Checkmate. Codeforces Expert · LeetCode Knight · Google CTF Rank 146.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     "distributed systems",
     "NATS JetStream",
     "competitive programmer India",
-    "Codeforces Specialist",
+    "Codeforces Expert",
     "LeetCode Knight",
     "Google CTF",
     "open source contributor",

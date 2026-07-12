@@ -53,10 +53,10 @@ export function About() {
         <p>
           Right now I&apos;m interning with <strong>Formstr</strong> as part of Summer of Bitcoin, working on a
           unified super-app for forms, notes, calendar and files — with{" "}
-          <span style={{ color: "var(--fg-1)" }}>35+ PRs</span> shipped across the core repos.
+          <span style={{ color: "var(--fg-1)" }}>50+ PRs</span> shipped across the core repos.
         </p>
         <p>
-          Outside of internships, I do competitive programming (CF Specialist, 4★ CodeChef), CTFs (Rank{" "}
+          Outside of internships, I do competitive programming (CF Expert, 4★ CodeChef), CTFs (Rank{" "}
           <span style={{ color: "var(--fg-1)" }}>146</span> at Google CTF), and contribute to OSS projects like{" "}
           <span style={{ color: "var(--fg-1)" }}>tauri</span>,{" "}
           <span style={{ color: "var(--fg-1)" }}>fedimint</span>, and{" "}

@@ -35,7 +35,7 @@ export const PROJECTS_DEEP: Record<string, ProjectInfo> = {
       "WebSocket Hub in Go with optimistic updates, typing indicators, multi-tab sync",
       "LiveKit-powered WebRTC video with low-latency room joins",
     ],
-    links: { repo: SITE.github, demo: null },
+    links: { repo: SITE.github, demo: "https://skillswap.anirudhrajora.dev/" },
   },
   odoo: {
     name: "odoo-finalist",
@@ -49,31 +49,18 @@ export const PROJECTS_DEEP: Record<string, ProjectInfo> = {
     ],
     links: { repo: SITE.github, demo: null },
   },
-  planwise: {
-    name: "planwise",
-    tagline: "gamified task manager · xp + heatmap",
+  lockin: {
+    name: "lockin",
+    tagline: "study & resource hub · subjects → milestones → tasks",
     status: "live",
-    desc: "A task management app that helps you stay organized, set priorities, and track your progress — with fun features like XP, levels, and a heatmap to keep you motivated.",
-    tech: ["Next.js", "Tailwind CSS", "TypeScript", "Prisma", "Next-Auth", "Tanstack Query"],
+    desc: "A personal study & resource hub organized around Subjects — plan milestones, stash resources, and track focus time. You're the brain; LockIn is the shelf + planner, not an AI generator.",
+    tech: ["Next.js", "React", "TypeScript", "Prisma", "PostgreSQL", "Next-Auth", "Tanstack Query", "Tailwind"],
     highlights: [
-      "Gamified progress tracking — XP per task, level progression, daily streak heatmap",
-      "Type-safe data layer with Prisma + Tanstack Query for optimistic updates",
-      "Credentials + OAuth auth via NextAuth (Google/GitHub)",
+      "One component tree, two looks via next-themes — Creative (light, neobrutalist) + Focus (dark, editor)",
+      "Cross-subject Today view for due/overdue tasks; Pomodoro/stopwatch timer logs focus time into a heatmap",
+      "Strict Subject → Milestone → Task → TimerSession tree; progress derived, never stored",
     ],
-    links: { repo: SITE.github, demo: null },
-  },
-  zonic: {
-    name: "zonic",
-    tagline: "spotify-integrated music & podcasts",
-    status: "live",
-    desc: "A web application that integrates with Spotify to play music and podcasts, browse your library, and provides contextual insights like artist news, weather, and related GIFs.",
-    tech: ["React", "Tailwind CSS", "ExpressJS", "Node.js", "TypeScript"],
-    highlights: [
-      "OAuth flow against the Spotify Web API — library browse + playback control",
-      "Contextual data fanout: artist news, weather, related GIFs alongside each track",
-      "Express + Node backend; React frontend with Tailwind",
-    ],
-    links: { repo: SITE.github, demo: null },
+    links: { repo: "https://github.com/Sky-walkerX/LockIn", demo: "https://lockin.namankhandelwal.dev/" },
   },
 };
 
@@ -82,11 +69,9 @@ export const PROJECT_ALIAS: Record<string, string> = {
   ss: "skillswap",
   sk: "skillswap",
   travel: "trequila",
-  pw: "planwise",
-  plan: "planwise",
-  z: "zonic",
-  music: "zonic",
-  spotify: "zonic",
+  li: "lockin",
+  lock: "lockin",
+  study: "lockin",
 };
 
 export const FORTUNES = [

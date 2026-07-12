@@ -152,7 +152,7 @@ export async function Stats() {
         <div className="ratings-card">
           <div className="group">
             <div className="ghead">
-              <span className="glyph">▮</span> codeforces <small>specialist</small>
+              <span className="glyph">▮</span> codeforces <small>expert</small>
             </div>
             <div className="row">
               <span className="k">rating</span>
@@ -160,11 +160,11 @@ export async function Stats() {
             </div>
             <div className="row">
               <span className="k">max</span>
-              <span className="v">{cf?.maxRating ?? 1526}</span>
+              <span className="v">{cf?.maxRating ?? 1623}</span>
             </div>
             <div className="row">
               <span className="k">rank</span>
-              <span className="v acc">{cf?.rank ?? "Specialist"}</span>
+              <span className="v acc">{cf?.rank ?? "Expert"}</span>
             </div>
           </div>
 

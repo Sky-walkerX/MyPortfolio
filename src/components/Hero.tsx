@@ -158,7 +158,7 @@ export function Hero() {
         </div>
         <div className="out-row">
           <span className="gt" />
-          <span>Specialist on Codeforces · 4★ on CodeChef · ICPC India Prelims 2025 (rank 137).</span>
+          <span>Expert on Codeforces · 4★ on CodeChef · ICPC India Prelims 2025 (rank 137).</span>
         </div>
       </div>
 
