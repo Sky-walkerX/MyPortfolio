@@ -126,7 +126,7 @@ Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
       if (what === "experience") {
         return append(`<table>
 <tr><td>2026.05—</td><td><span class="acc">Formstr</span> · Summer of Bitcoin intern</td></tr>
-<tr><td>2024—</td><td><span class="acc">Axios IIIT-L</span> · Web Dev Wing + FOSS Wing</td></tr>
+<tr><td>Sep 2025—</td><td><span class="acc">Axios IIIT-L</span> · Web Dev Wing + FOSS Wing</td></tr>
 </table>`);
       }
       if (what === "hackathons") {

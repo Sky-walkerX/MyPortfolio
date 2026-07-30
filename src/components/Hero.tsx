@@ -109,7 +109,8 @@ export function Hero() {
           <span className="cursor">█</span>
         </h1>
         <p className="hero-role">
-          full-stack developer<span className="sep">·</span>distributed systems
+          competitive programmer<span className="sep">·</span>full-stack developer
+          <span className="sep">·</span>distributed systems
           <span className="sep">·</span>open source
         </p>
 

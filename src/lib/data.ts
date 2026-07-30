@@ -43,10 +43,12 @@ export const PROJECTS: Project[] = [
     description:
       "A full-stack AI travel planner that turns a single prompt into a complete trip itinerary — places, weather, photos, all streamed in real time.",
     bullets: [
-      "Event-driven Go backend on <strong>NATS JetStream</strong>, orchestrating parallel micro-workers — cut response time by 60%.",
-      "Streaming pipeline using <strong>Server-Sent Events</strong> to deliver partial updates instantly to the Next.js frontend.",
+      "Distributed, event-driven Go backend on <strong>NATS JetStream</strong>, fanning each HTTP request across <strong>4 parallel micro-workers</strong> — cut end-to-end latency from <span class='acc'>~2.5 min to 50–60s</span>.",
+      "Streamed partial itineraries to the Next.js frontend via <strong>Server-Sent Events</strong>, putting first results on screen in <span class='acc'>under 8s</span>.",
+      "Ranked spots with a <strong>linear ML model</strong> trained offline over 50 destinations, then sequenced daily routes to minimize travel distance via a <strong>2-opt greedy TSP solver</strong>.",
+      "Managed five independent async state slices arriving out of order, driving a live stage-progress UI with per-stage counts instead of one loading spinner.",
     ],
-    tags: ["next.js", "go", "nats", "postgres", "redis", "gemini"],
+    tags: ["go", "nats", "postgres", "redis", "next.js", "maplibre-gl", "heroku"],
     links: { live: "https://www.trequila.tech/", source: "https://github.com/Sky-walkerX/trequila" },
     media: {
       poster: "/assets/projects/trequila/thumbnail/dark.jpg",
@@ -85,10 +87,11 @@ export const PROJECTS: Project[] = [
     description:
       "A peer-to-peer skill exchange platform with real-time end-to-end encrypted chat and WebRTC video calling.",
     bullets: [
-      "E2EE messaging via <strong>X25519 key exchange</strong> + XSalsa20-Poly1305 (TweetNaCl).",
-      "WebSocket Hub in Go with optimistic updates, typing indicators, multi-tab support, and <strong>LiveKit</strong>-powered video.",
+      "Led <strong>backend systems design</strong> in a 4-member team for a P2P skill exchange platform with real-time <strong>end-to-end encrypted</strong> chat.",
+      "Engineered a concurrent <strong>WebSocket Hub</strong> in Go handling real-time fan-out, optimistic updates, typing indicators and WebRTC-based video calling.",
+      "E2EE messaging via <strong>X25519 key exchange</strong> + XSalsa20-Poly1305, and <strong>LiveKit</strong>-powered video calls — backed by Vitest unit tests covering the crypto and chat layers.",
     ],
-    tags: ["next.js", "go", "gin", "postgres", "websocket", "livekit", "docker"],
+    tags: ["go", "postgres", "websocket", "cryptography", "livekit", "next.js", "typescript", "docker"],
     links: { live: "https://skillswap.anirudhrajora.dev/", source: "https://github.com/Sky-walkerX/Skill-swap" },
     media: {
       poster: "/assets/projects/skillswap/thumbnail/dark.jpg",
@@ -127,10 +130,12 @@ export const PROJECTS: Project[] = [
     description:
       "A personal study & resource hub organized around Subjects — plan milestones, stash resources, and track focus time. You're the brain; LockIn is the shelf + planner, not an AI generator.",
     bullets: [
-      "One component tree, two looks via <strong>next-themes</strong> — Creative (light, neobrutalist) and Focus (dark, editor-calm).",
-      "Cross-subject <strong>Today</strong> view for due/overdue tasks; a Pomodoro/stopwatch focus timer logs time per task into a GitHub-style heatmap.",
+      "Drag-and-drop task boards with <strong>optimistic React Query mutations</strong>, updating the UI instantly ahead of server sync.",
+      "Code-split a <strong>CodeMirror</strong> markdown editor out of the main bundle and memoized list rows to cut re-renders.",
+      "One component tree, two fully interchangeable themes via <strong>next-themes</strong> — Creative (light, neobrutalist) and Focus (dark, editor-calm).",
+      "Cross-subject <strong>Today</strong> view for due/overdue tasks; a focus timer logs time per task into a GitHub-style heatmap.",
     ],
-    tags: ["next.js", "react", "typescript", "prisma", "postgres", "next-auth", "tanstack-query", "tailwind"],
+    tags: ["react", "next.js", "typescript", "tanstack-query", "dnd-kit", "codemirror", "prisma", "postgres"],
     links: { live: "https://lockin.namankhandelwal.dev/", source: "https://github.com/Sky-walkerX/LockIn" },
     media: {
       poster: "/assets/projects/lockin/thumbnail/dark.jpg",
@@ -181,16 +186,18 @@ export const EXPERIENCES: Experience[] = [
     company: "Formstr",
     date: "May 2026 — Present",
     bullets: [
-      "Building the <strong>Formstr Super App</strong> — book events, manage files, create forms, and view analytics with AI as the interface, powered by <strong>MCP tool calling</strong>.",
-      "Built <strong>@formstr/mcp</strong> (MCP server exposing the super-app to LLM hosts over stdio with secure auth) and <strong>@formstr/calendar-sdk</strong> (npm package for encrypted Nostr calendar events + RSVPs); authored <strong>700+ Vitest tests</strong>.",
-      'Contributed <strong>50+ merged PRs</strong> across core repositories. <a href="https://github.com/Sky-walkerX" target="_blank" rel="noopener">view contributions →</a>',
+      "Building the <strong>Formstr Super App</strong> — book events, manage files, create forms, and view analytics with <strong>AI as the interface</strong>, powered by <strong>MCP tool calling</strong>.",
+      "Built <strong>@formstr/mcp</strong>, an MCP server exposing <strong>50+ tools</strong> to LLM hosts, and <strong>@formstr/calendar-sdk</strong>, an npm package for scheduling calendar events and RSVPs on Nostr.",
+      "Practised <strong>test-driven development</strong> — <strong>778 tests</strong> across <strong>97 Vitest files</strong> to reach <span class='acc'>88–91%</span> statement coverage, shipping with minimal defects.",
+      "Fixed a <strong>critical security vulnerability</strong> leaking NIP-44 wrapped events and cryptographic signing keys into exported files.",
+      'Shipped <strong>50+ merged pull requests</strong> to the Super App in production. <a href="https://github.com/search?q=is:pr+is:merged+author:Sky-walkerX+org:formstr-hq&type=pullrequests" target="_blank" rel="noopener">view contributions →</a>',
     ],
   },
   {
     branch: "├──",
     role: "Member, Web Development Wing",
     company: "Axios · IIIT Lucknow",
-    date: "2024 — Present",
+    date: "Sep 2025 — Present",
     bullets: [
       "Technical society of IIIT Lucknow — building internal tools and running workshops on full-stack dev.",
     ],
@@ -199,7 +206,7 @@ export const EXPERIENCES: Experience[] = [
     branch: "└──",
     role: "Member, FOSS Wing",
     company: "Axios · IIIT Lucknow",
-    date: "2024 — Present",
+    date: "Sep 2025 — Present",
     bullets: ["Open-source advocacy + contributing to projects across Rust, Go, and TypeScript ecosystems."],
   },
 ];
