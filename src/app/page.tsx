@@ -18,15 +18,30 @@ import {
 } from "@/components/Sections";
 import { Snake } from "@/components/Snake";
 import { Stats } from "@/components/Stats";
+import { loadStats } from "@/lib/stats";
+import { TerminalProvider } from "@/components/TerminalSession";
 import { Topbar } from "@/components/Topbar";
 import { Tweaks } from "@/components/Tweaks";
 
 export const revalidate = 3600;
 
-export default function Page() {
+export default async function Page() {
+  // Same call Stats makes — Next dedupes the underlying fetches within a render,
+  // so the boot's readout costs nothing extra.
+  const stats = await loadStats();
+  const cf = stats.codeforces.user;
+
   return (
-    <>
-      <BootSequence />
+    // The hero prompt and the ⌘K overlay are two views of one shell session.
+    <TerminalProvider>
+      <BootSequence
+        stats={{
+          githubContributions:
+            stats.github.heatmap.status === "ok" ? stats.github.heatmap.total : null,
+          cfRating: cf?.maxRating ?? null,
+          cfRank: cf?.rank ?? null,
+        }}
+      />
       <Topbar />
       <main id="top">
         <Hero />
@@ -48,6 +63,6 @@ export default function Page() {
       <Tweaks />
       <GlobalEffects />
       <CustomCursor />
-    </>
+    </TerminalProvider>
   );
 }

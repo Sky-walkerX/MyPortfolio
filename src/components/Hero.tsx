@@ -1,27 +1,27 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { HeroPrompt } from "./HeroPrompt";
 
 const NOISE = "!@#$%^&*<>/\\|?+={}~[];:§Ø£¶ΔΣΩπμ";
 
-export function Hero() {
-  const namingRefs = useRef<HTMLSpanElement[]>([]);
-
+/**
+ * One resolve, once, when the page is actually ready to be read — not the old
+ * random 8–12s loop, which re-scrambled the name while people were reading it.
+ */
+function useNameResolve(refs: React.RefObject<HTMLSpanElement[]>) {
   useEffect(() => {
     if (typeof document === "undefined") return;
     if (document.body.getAttribute("data-motion") === "off") return;
 
-    const targets = namingRefs.current.filter(Boolean);
-    if (targets.length === 0) return;
-
     let alive = true;
     const timers: number[] = [];
 
-    function scramble(el: HTMLSpanElement) {
+    const scramble = (el: HTMLSpanElement) => {
       const original = el.dataset.text ?? el.textContent ?? "";
       el.classList.add("go");
       let frame = 0;
-      const frames = 6;
+      const frames = 7;
       const tick = () => {
         if (!alive) return;
         if (frame >= frames) {
@@ -30,222 +30,83 @@ export function Hero() {
           return;
         }
         const chars = original.split("");
-        const swaps = Math.max(1, Math.floor(original.length * 0.35));
-        for (let i = 0; i < swaps; i++) {
-          const idx = Math.floor(Math.random() * chars.length);
-          chars[idx] = NOISE[Math.floor(Math.random() * NOISE.length)];
+        // Resolve left-to-right: each frame locks in a few more real characters.
+        const settled = Math.floor((frame / frames) * original.length);
+        for (let i = settled; i < chars.length; i++) {
+          if (chars[i] === " ") continue;
+          chars[i] = NOISE[Math.floor(Math.random() * NOISE.length)];
         }
         el.textContent = chars.join("");
         frame++;
-        timers.push(window.setTimeout(tick, 55));
+        timers.push(window.setTimeout(tick, 52));
       };
       tick();
-    }
+    };
 
-    function loop() {
-      const delay = 8000 + Math.random() * 4000;
-      timers.push(
-        window.setTimeout(() => {
-          if (!alive) return;
-          if (document.body.getAttribute("data-motion") !== "off") {
-            if (Math.random() > 0.45) targets.forEach(scramble);
-            else scramble(targets[Math.floor(Math.random() * targets.length)]);
-          }
-          loop();
-        }, delay),
-      );
+    const start = () => {
+      const targets = refs.current?.filter(Boolean) ?? [];
+      targets.forEach((el, i) => {
+        timers.push(window.setTimeout(() => alive && scramble(el), i * 110));
+      });
+    };
+
+    // Wait for the boot overlay to finish before spending the reveal.
+    if (document.body.getAttribute("data-boot") === "done") {
+      timers.push(window.setTimeout(start, 120));
+    } else {
+      const obs = new MutationObserver(() => {
+        if (document.body.getAttribute("data-boot") === "done") {
+          obs.disconnect();
+          timers.push(window.setTimeout(start, 120));
+        }
+      });
+      obs.observe(document.body, { attributes: true, attributeFilter: ["data-boot"] });
+      return () => {
+        alive = false;
+        obs.disconnect();
+        timers.forEach((t) => window.clearTimeout(t));
+      };
     }
-    loop();
 
     return () => {
       alive = false;
       timers.forEach((t) => window.clearTimeout(t));
     };
-  }, []);
+  }, [refs]);
+}
+
+export function Hero() {
+  const namingRefs = useRef<HTMLSpanElement[]>([]);
+  useNameResolve(namingRefs);
 
   const setRef = (i: number) => (el: HTMLSpanElement | null) => {
     if (el) namingRefs.current[i] = el;
   };
 
-  const openPalette = () => window.dispatchEvent(new Event("nk:open-palette"));
-
   return (
-    <section className="session" aria-label="intro">
-      <div className="line">
-        <span className="prompt">
-          <span className="c"># Last login: Mon May 25 2026 on ttys001</span>
-        </span>
-      </div>
-      <div className="line">
-        <span className="prompt">
-          <span className="u">naman</span>
-          <span className="c">@</span>
-          <span className="h">portfolio</span>
-          <span className="c">:</span>
-          <span className="p">~</span>
-          <span className="d">$</span>
-        </span>
-        <span className="cmd">./welcome.sh</span>
-      </div>
-
-      <div className="hero">
-        <span className="hero-corner tl" />
-        <span className="hero-corner tr" />
-        <span className="hero-corner bl" />
-        <span className="hero-corner br" />
-
-        <p className="hero-eyebrow">
-          <span className="acc">›</span> hello world. i&apos;m
-        </p>
+    <section className="session hero-session" aria-label="intro">
+      <div className="hero-head">
         <h1 className="hero-name">
           <span className="glitch" data-text="naman" ref={setRef(0)}>
             naman
-          </span>
-          <span className="acc">.</span>
-          <br />
+          </span>{" "}
           <span className="glitch" data-text="khandelwal" ref={setRef(1)}>
             khandelwal
           </span>
-          <span className="cursor">█</span>
+          <span className="acc">.</span>
         </h1>
-        <p className="hero-role">
-          competitive programmer<span className="sep">·</span>full-stack developer
-          <span className="sep">·</span>distributed systems
-          <span className="sep">·</span>open source
-        </p>
-
-        <div className="hero-meta">
-          <span>
-            <span className="k">@</span> <span className="v">IIIT Lucknow</span>
-          </span>
-          <span>
-            <span className="k">role:</span> <span className="v">Summer of Bitcoin Intern</span>
-          </span>
-          <span>
-            <span className="k">at:</span> <span className="v">Formstr</span>
-          </span>
-          <span>
-            <span className="k">status:</span> <span className="v">shipping</span>
-          </span>
-        </div>
-      </div>
-
-      <div className="line">
-        <span className="prompt">
-          <span className="u">naman</span>
-          <span className="c">@</span>
-          <span className="h">portfolio</span>
-          <span className="c">:</span>
-          <span className="p">~</span>
-          <span className="d">$</span>
-        </span>
-        <span className="cmd">
-          whoami <span className="flag">--short</span>
-        </span>
-      </div>
-      <div className="output">
-        <div className="out-row">
-          <span className="gt" />
-          <span>
-            3rd year CS undergrad at <span className="hl">IIIT Lucknow</span> (GPA 8.90).
-          </span>
-        </div>
-        <div className="out-row">
-          <span className="gt" />
-          <span>
-            Currently a <span className="acc">Summer of Bitcoin</span> intern at Formstr — shipping the Formstr
-            Super App.
-          </span>
-        </div>
-        <div className="out-row">
-          <span className="gt" />
-          <span>Expert on Codeforces · 4★ on CodeChef · ICPC India Prelims 2025 (rank 137).</span>
-        </div>
-      </div>
-
-      <div className="line">
-        <span className="prompt">
-          <span className="u">naman</span>
-          <span className="c">@</span>
-          <span className="h">portfolio</span>
-          <span className="c">:</span>
-          <span className="p">~</span>
-          <span className="d">$</span>
-        </span>
-        <span className="cmd">help</span>
-      </div>
-      <div className="output">
-        <div className="btn-row" style={{ marginTop: 10 }}>
-          <a href="#work" className="cli-btn primary">
-            <span className="glyph">$</span> view projects
-          </a>
-          <a
-            href="https://github.com/Sky-walkerX"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cli-btn"
-          >
-            <span className="glyph">↗</span> github
-          </a>
-          <a href="mailto:namankhandelwal.dev@gmail.com" className="cli-btn">
-            <span className="glyph">✉</span> email
-          </a>
-          <button className="cli-btn" type="button" onClick={openPalette}>
-            <span className="glyph">⌘</span> open terminal
-          </button>
-        </div>
-        <p style={{ color: "var(--fg-4)", fontSize: 12, margin: "14px 0 0" }}>
-          # tip:{" "}
-          <kbd
-            style={{
-              fontFamily: "var(--font-mono-stack)",
-              fontSize: 11,
-              padding: "1px 5px",
-              background: "var(--bg-3)",
-              border: "1px solid var(--border-1)",
-            }}
-          >
-            ⌘ K
-          </kbd>{" "}
-          or{" "}
-          <kbd
-            style={{
-              fontFamily: "var(--font-mono-stack)",
-              fontSize: 11,
-              padding: "1px 5px",
-              background: "var(--bg-3)",
-              border: "1px solid var(--border-1)",
-            }}
-          >
-            /
-          </kbd>{" "}
-          opens the terminal ·{" "}
-          <kbd
-            style={{
-              fontFamily: "var(--font-mono-stack)",
-              fontSize: 11,
-              padding: "1px 5px",
-              background: "var(--bg-3)",
-              border: "1px solid var(--border-1)",
-            }}
-          >
-            j
-          </kbd>
-          /
-          <kbd
-            style={{
-              fontFamily: "var(--font-mono-stack)",
-              fontSize: 11,
-              padding: "1px 5px",
-              background: "var(--bg-3)",
-              border: "1px solid var(--border-1)",
-            }}
-          >
-            k
-          </kbd>{" "}
-          scrolls · try <span style={{ color: "var(--accent)" }}>snake</span>
+        <p className="hero-card">
+          <span className="hl">IIIT Lucknow</span> <span className="sep">·</span>{" "}
+          <span className="hl">Summer of Bitcoin</span> <span className="muted">@</span>{" "}
+          <span className="hl">Formstr</span>
+          <br />
+          Codeforces <span className="hl">Expert</span> <span className="sep">·</span> ICPC prelims{" "}
+          <span className="hl">137</span> <span className="sep">·</span> LeetCode{" "}
+          <span className="hl">Knight</span>
         </p>
       </div>
+
+      <HeroPrompt />
     </section>
   );
 }

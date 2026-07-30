@@ -1,45 +1,113 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { mountTable } from "@/lib/fs";
+import { SITE } from "@/lib/site";
 
-interface BootLine {
-  d: number;
-  html: string;
+/** Live values from `loadStats()`, threaded down from the server page. */
+export interface BootStats {
+  githubContributions: number | null;
+  cfRating: number | null;
+  cfRank: string | null;
 }
 
-const BOOT_SEQ: BootLine[] = [
-  { d: 160, html: '<span class="acc">[boot]</span> portfolio kernel v2.0 <span class="mute">· build #2026.05.25</span>' },
-  { d: 220, html: '<span class="ok">[ ok ]</span> initializing core <span class="mute">· cpu: caffeine</span>' },
-  { d: 240, html: '<span class="ok">[ ok ]</span> mounting <span class="acc">/home/naman</span>' },
-  { d: 240, html: '<span class="ok">[ ok ]</span> mounting <span class="acc">/projects /skills /blogs /hackathons</span>' },
-  { d: 260, html: '<span class="ok">[ ok ]</span> loading shell <span class="mute">(jetbrains-mono, dark-violet theme)</span>' },
-  { d: 280, html: '<span class="ok">[ ok ]</span> connecting → <span class="acc">github.com</span> <span class="mute">latency: 47ms</span>' },
-  { d: 280, html: '<span class="ok">[ ok ]</span> connecting → <span class="acc">codeforces.com</span> <span class="mute">latency: 112ms</span>' },
-  { d: 260, html: '<span class="ok">[ ok ]</span> connecting → <span class="acc">leetcode.com</span> <span class="mute">latency: 89ms</span>' },
-  { d: 260, html: '<span class="ok">[ ok ]</span> starting terminal session <span class="mute">pid 2026</span>' },
-  { d: 280, html: '<span class="warn">[ ⚠ ]</span> caffeine reserves at 92% <span class="mute">(within tolerance)</span>' },
-  { d: 240, html: '<span class="ok">[ ok ]</span> loading projects · hackathons · blogs' },
-  { d: 260, html: '<span class="ok">[ ok ]</span> all systems nominal' },
-  { d: 380, html: '<span class="acc pulse">&gt;&gt; welcome.</span>' },
-];
+interface BootLine {
+  /** Delay before this line prints, in ms. */
+  d: number;
+  /** Left-hand label — `mount ~/projects`, `fetch github.com/...`. */
+  left: string;
+  /** Numeric column, right-aligned so the digits line up down the table. */
+  num?: string;
+  /** Trailing detail. */
+  note?: string;
+}
 
-const BOOT_INITIAL_DELAY = 480;
-const BOOT_HOLD_AFTER = 760;
+const BOOT_INITIAL_DELAY = 300;
+const BOOT_HOLD_AFTER = 520;
 
-export function BootSequence() {
-  const rootRef = useRef<HTMLDivElement | null>(null);
+/**
+ * The boot mounts the filesystem the terminal actually walks — every path and
+ * count comes from `fs.ts`, so it can't announce something `cd` would then
+ * fail to find. Real numbers throughout; exactly one joke, at the end.
+ */
+function buildSequence(stats: BootStats): BootLine[] {
+  const lines: BootLine[] = [
+    {
+      d: 300,
+      left: `<span class="acc">[boot]</span> mounting filesystem`,
+      note: `<span class="mute">portfolio v2.0 · next.js 16</span>`,
+    },
+  ];
+
+  for (const m of mountTable()) {
+    lines.push({
+      d: 245,
+      left: `<span class="ok">mount</span>  <span class="acc">${m.path}</span>`,
+      num: `<span class="hl">${m.count}</span>`,
+      note: `<span class="mute">${m.note}</span>`,
+    });
+  }
+
+  // Live fetches — the two things the site genuinely retrieves at build time.
+  const gh = stats.githubContributions;
+  lines.push({
+    d: 355,
+    left: `<span class="mute">fetch</span>  github.com/${SITE.githubHandle}`,
+    num: gh !== null ? `<span class="ok">200</span>` : `<span class="warn">—</span>`,
+    note:
+      gh !== null
+        ? `<span class="hl">${gh.toLocaleString()}</span><span class="mute"> contributions · 6mo</span>`
+        : `<span class="mute">offline · using cached counts</span>`,
+  });
+
+  const rating = stats.cfRating;
+  lines.push({
+    d: 355,
+    left: `<span class="mute">fetch</span>  codeforces.com/${SITE.cfHandle}`,
+    num: rating !== null ? `<span class="ok">200</span>` : `<span class="warn">—</span>`,
+    note:
+      rating !== null
+        ? `<span class="cy">${stats.cfRank ?? "Expert"}</span><span class="mute"> · peak </span><span class="hl">${rating}</span>`
+        : `<span class="mute">offline · using cached rating</span>`,
+  });
+
+  lines.push({
+    d: 360,
+    left: `<span class="ok">[ ok ]</span> filesystem ready`,
+    note: `<span class="mute">0 errors · bash 5.2 · 40 commands</span>`,
+  });
+
+  // The one gag.
+  lines.push({
+    d: 470,
+    left: `<span class="warn">[ ⚠ ]</span> <span class="mute">fsck: found 1 unfinished side project. ignoring.</span>`,
+  });
+
+  lines.push({
+    d: 300,
+    left: `<span class="acc">naman@portfolio</span><span class="mute">:</span><span class="cy">~</span><span class="hl">$</span> <span class="boot-cur"></span>`,
+  });
+
+  return lines;
+}
+
+export function BootSequence({ stats }: { stats: BootStats }) {
   const linesRef = useRef<HTMLDivElement | null>(null);
   const [closing, setClosing] = useState(false);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
-    const motion = document.body.getAttribute("data-motion") !== "off";
 
-    if (!motion) {
+    const reduced =
+      document.body.getAttribute("data-motion") === "off" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduced) {
       document.body.setAttribute("data-boot", "done");
       return;
     }
 
+    const SEQ = buildSequence(stats);
     let done = false;
     let i = 0;
     let timeoutId: number | null = null;
@@ -51,50 +119,58 @@ export function BootSequence() {
       setClosing(true);
       window.setTimeout(() => {
         document.body.setAttribute("data-boot", "done");
-      }, 480);
+      }, 460);
     };
 
     const emit = () => {
       if (done) return;
-      if (i >= BOOT_SEQ.length) {
-        // hold the completed screen briefly before fading out
+      if (i >= SEQ.length) {
         timeoutId = window.setTimeout(finish, BOOT_HOLD_AFTER);
         return;
       }
-      const item = BOOT_SEQ[i++];
+      const item = SEQ[i++];
       const el = document.createElement("div");
       el.className = "ln";
-      el.innerHTML = item.html;
+      // Exactly two children so the flex row has a real left and right column.
+      el.innerHTML =
+        `<span class="bl">${item.left}</span>` +
+        `<span class="bn">${item.num ?? ""}</span>` +
+        `<span class="bv">${item.note ?? ""}</span>`;
       linesRef.current?.appendChild(el);
       timeoutId = window.setTimeout(emit, item.d);
     };
 
-    const skip = () => {
+    /**
+     * Any input skips. If it was a printable keystroke, hand the character to
+     * the hero prompt rather than eating it — someone who starts typing
+     * `help` during the boot lands in the prompt with `h` already there.
+     */
+    const onKey = (e: KeyboardEvent) => {
+      if (!done && e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey && e.key !== "/") {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent("nk:boot-seed", { detail: { key: e.key } }));
+      }
       finish();
     };
+    const onPointer = () => finish();
 
-    window.addEventListener("keydown", skip, true);
-    window.addEventListener("click", skip, true);
-    window.addEventListener("touchstart", skip, true);
+    window.addEventListener("keydown", onKey, true);
+    window.addEventListener("click", onPointer, true);
+    window.addEventListener("touchstart", onPointer, true);
 
     timeoutId = window.setTimeout(emit, BOOT_INITIAL_DELAY);
 
     return () => {
       done = true;
       if (timeoutId !== null) window.clearTimeout(timeoutId);
-      window.removeEventListener("keydown", skip, true);
-      window.removeEventListener("click", skip, true);
-      window.removeEventListener("touchstart", skip, true);
+      window.removeEventListener("keydown", onKey, true);
+      window.removeEventListener("click", onPointer, true);
+      window.removeEventListener("touchstart", onPointer, true);
     };
-  }, []);
+  }, [stats]);
 
   return (
-    <div
-      ref={rootRef}
-      className={`boot-root${closing ? " closing" : ""}`}
-      id="bootRoot"
-      aria-hidden="true"
-    >
+    <div className={`boot-root${closing ? " closing" : ""}`} id="bootRoot" aria-hidden="true">
       <div className="boot-screen">
         <pre className="boot-banner" aria-hidden="true">
           {`  ███╗   ██╗██╗  ██╗
