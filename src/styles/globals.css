@@ -2113,6 +2113,16 @@ footer .credit .acc {
   scrollbar-width: thin;
   scrollbar-color: var(--accent-30) transparent;
 }
+.pm-diagram-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  background: var(--bg-0);
+  border: 1px solid var(--border-1);
+  padding: 14px 16px;
+  margin: 0;
+}
 .pm-tags {
   display: flex;
   flex-wrap: wrap;
