@@ -118,7 +118,8 @@ export async function Stats() {
         <div className="heatmaps-stack">
           <div className="heatmap-card">
             <h4>
-              <span className="glyph">▮</span> codeforces <span className="handle">(SkywalkerX)</span>
+              <span className="glyph">▮</span> codeforces + leetcode{" "}
+              <span className="handle">(SkywalkerX · Sky-walkerX)</span>
             </h4>
             <p className="heatmap-meta">
               {stats.codeforces.heatmap.status === "ok" ? (

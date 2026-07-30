@@ -12,5 +12,6 @@ export const SITE = {
   githubHandle: "Sky-walkerX",
   linkedin: "https://www.linkedin.com/in/naman-khandelwal-53161829a/",
   cfHandle: "SkywalkerX",
+  leetcodeHandle: "Sky-walkerX",
   resumePath: "/assets/Naman_Khandelwal_Resume.pdf",
 } as const;

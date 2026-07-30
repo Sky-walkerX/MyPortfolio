@@ -59,7 +59,9 @@ function buildHeatmap(contributions: ContributionDay[]): HeatmapData {
   if (contributions.length === 0) return emptyHeatmap("empty");
 
   const cutoff = Date.now() - SIX_MONTHS_MS;
-  const filtered = contributions.filter((d) => new Date(d.date).getTime() >= cutoff);
+  const filtered = contributions
+    .filter((d) => new Date(d.date).getTime() >= cutoff)
+    .sort((a, b) => a.date.localeCompare(b.date));
   if (filtered.length === 0) return emptyHeatmap("empty");
 
   const nonzero = filtered
@@ -126,6 +128,44 @@ async function fetchJson<T>(url: string, headers: Record<string, string> = {}): 
   // tiny backoff before single retry
   await new Promise((r) => setTimeout(r, 300));
   return fetchJsonOnce<T>(url, headers);
+}
+
+async function postJsonOnce<T>(url: string, body: unknown): Promise<T | null> {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      signal: ctl.signal,
+      next: { revalidate: REVALIDATE_SECONDS },
+      headers: { "Content-Type": "application/json", Accept: "application/json", "User-Agent": UA },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function postJson<T>(url: string, body: unknown): Promise<T | null> {
+  const first = await postJsonOnce<T>(url, body);
+  if (first !== null) return first;
+  await new Promise((r) => setTimeout(r, 300));
+  return postJsonOnce<T>(url, body);
+}
+
+/** Sums per-day counts across any number of contribution lists. */
+function mergeContributions(...lists: ContributionDay[][]): ContributionDay[] {
+  const byDay = new Map<string, number>();
+  for (const list of lists) {
+    for (const d of list) {
+      byDay.set(d.date, (byDay.get(d.date) ?? 0) + d.count);
+    }
+  }
+  return Array.from(byDay.entries()).map(([date, count]) => ({ date, count }));
 }
 
 function githubHeaders(): Record<string, string> {
@@ -245,11 +285,11 @@ interface CfStatusResponse {
   }>;
 }
 
-async function loadCodeforcesHeatmap(): Promise<HeatmapData> {
+async function loadCodeforcesContributions(): Promise<ContributionDay[]> {
   const data = await fetchJson<CfStatusResponse>(
     `https://codeforces.com/api/user.status?handle=${SITE.cfHandle}&from=1&count=2000`,
   );
-  if (!data || data.status !== "OK" || !data.result) return emptyHeatmap();
+  if (!data || data.status !== "OK" || !data.result) return [];
 
   const byDay = new Map<string, number>();
   const solved = new Set<string>();
@@ -262,11 +302,54 @@ async function loadCodeforcesHeatmap(): Promise<HeatmapData> {
     byDay.set(day, (byDay.get(day) ?? 0) + 1);
   }
 
-  const contribs = Array.from(byDay.entries())
-    .map(([date, count]) => ({ date, count }))
-    .sort((a, b) => a.date.localeCompare(b.date));
+  return Array.from(byDay.entries()).map(([date, count]) => ({ date, count }));
+}
 
-  return buildHeatmap(contribs);
+interface LcCalendarResponse {
+  data?: {
+    matchedUser?: {
+      userCalendar?: {
+        submissionCalendar?: string;
+      } | null;
+    } | null;
+  };
+}
+
+// LeetCode has no official public API — this mirrors the query leetcode.com's
+// own profile page issues against its GraphQL endpoint. submissionCalendar is
+// scoped to the requested year, so last-6-months needs current + previous.
+const LC_CALENDAR_QUERY = `
+  query userProfileCalendar($username: String!, $year: Int) {
+    matchedUser(username: $username) {
+      userCalendar(year: $year) {
+        submissionCalendar
+      }
+    }
+  }
+`;
+
+async function loadLeetcodeYear(year: number): Promise<ContributionDay[]> {
+  const data = await postJson<LcCalendarResponse>("https://leetcode.com/graphql", {
+    query: LC_CALENDAR_QUERY,
+    variables: { username: SITE.leetcodeHandle, year },
+  });
+  const raw = data?.data?.matchedUser?.userCalendar?.submissionCalendar;
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as Record<string, number>;
+    return Object.entries(parsed).map(([ts, count]) => ({
+      date: new Date(Number(ts) * 1000).toISOString().slice(0, 10),
+      count: Number(count),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+async function loadLeetcodeContributions(): Promise<ContributionDay[]> {
+  const thisYear = new Date().getUTCFullYear();
+  const [curr, prev] = await Promise.all([loadLeetcodeYear(thisYear), loadLeetcodeYear(thisYear - 1)]);
+  return mergeContributions(curr, prev);
 }
 
 interface CfInfoResponse {
@@ -289,13 +372,16 @@ async function loadCodeforcesUser(): Promise<CodeforcesUser | null> {
 }
 
 export async function loadStats(): Promise<PortfolioStats> {
-  const [ghHeat, ghUser, ghPRs, cfHeat, cfUser] = await Promise.all([
+  const [ghHeat, ghUser, ghPRs, cfContribs, lcContribs, cfUser] = await Promise.all([
     loadGithubHeatmap(),
     loadGithubUser(),
     loadGithubPRs(),
-    loadCodeforcesHeatmap(),
+    loadCodeforcesContributions(),
+    loadLeetcodeContributions(),
     loadCodeforcesUser(),
   ]);
+
+  const cfHeat = buildHeatmap(mergeContributions(cfContribs, lcContribs));
 
   return {
     github: { heatmap: ghHeat, user: ghUser, pullRequests: ghPRs },
