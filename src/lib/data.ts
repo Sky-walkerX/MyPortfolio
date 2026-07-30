@@ -55,6 +55,8 @@ export const PROJECTS: Project[] = [
       dither: "/assets/projects/trequila/thumbnail/dark-dither.png",
       posterLight: "/assets/projects/trequila/thumbnail/light.jpg",
       ditherLight: "/assets/projects/trequila/thumbnail/light-dither.png",
+      // extensionless — ProjectMedia appends .webm and .mp4 as <source> siblings
+      video: "/assets/projects/trequila/video/demo",
       alt: "Trequila — AI travel itinerary generator",
     },
     deepDive: {

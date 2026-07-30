@@ -56,3 +56,10 @@ next-env.d.ts
 # brainstorming visual companion
 .superpowers/
 .playwright-mcp/
+
+# screen-recording masters — the committed demo.webm / demo.mp4 are transcoded
+# from these with ffmpeg. Keep the originals local; they run to hundreds of MB.
+*.mov
+
+# stray screenshots dropped in the repo root
+/hero.png
