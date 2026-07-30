@@ -49,7 +49,7 @@ export const PROJECTS: Project[] = [
       "Managed five independent async state slices arriving out of order, driving a live stage-progress UI with per-stage counts instead of one loading spinner.",
     ],
     tags: ["go", "nats", "postgres", "redis", "next.js", "maplibre-gl", "heroku"],
-    links: { live: "https://www.trequila.tech/", source: "https://github.com/Sky-walkerX/trequila" },
+    links: { live: "https://trequila.namankhandelwal.dev/", source: "https://github.com/Sky-walkerX/trequila" },
     media: {
       poster: "/assets/projects/trequila/thumbnail/dark.jpg",
       dither: "/assets/projects/trequila/thumbnail/dark-dither.png",
