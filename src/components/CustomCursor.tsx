@@ -28,7 +28,7 @@ export function CustomCursor() {
       }
       const el = e.target as Element;
       hovering = !!el.closest(
-        "a, button, [role='button'], input, textarea, select, label, .cli-btn, .proj-details-btn, .k"
+        "a, button, [role='button'], input, textarea, select, label, .cli-btn, .k"
       );
     };
 

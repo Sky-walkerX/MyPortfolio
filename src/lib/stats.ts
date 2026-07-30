@@ -138,6 +138,47 @@ function githubHeaders(): Record<string, string> {
   return h;
 }
 
+function parseRepoPath(sourceUrl: string): string | null {
+  const m = sourceUrl.match(/github\.com\/([^/]+\/[^/]+?)(?:\.git)?\/?$/);
+  return m ? m[1] : null;
+}
+
+/** Total commit count via the Link-header pagination trick — GitHub has no direct count field. */
+async function loadRepoCommitCount(path: string): Promise<number | null> {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(`https://api.github.com/repos/${path}/commits?per_page=1`, {
+      signal: ctl.signal,
+      next: { revalidate: REVALIDATE_SECONDS },
+      headers: { "User-Agent": UA, ...githubHeaders() },
+    });
+    if (!res.ok) return null;
+    const link = res.headers.get("link");
+    if (!link) {
+      const body = (await res.json()) as unknown[];
+      return Array.isArray(body) ? body.length : null;
+    }
+    const last = link.match(/[?&]page=(\d+)>;\s*rel="last"/);
+    return last ? Number(last[1]) : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** Keyed by source repo URL (as given in data.ts), not by owner/repo path — simpler for callers. */
+export async function loadRepoCommits(sourceUrls: string[]): Promise<Record<string, number | null>> {
+  const entries = await Promise.all(
+    sourceUrls.map(async (url) => {
+      const path = parseRepoPath(url);
+      return [url, path ? await loadRepoCommitCount(path) : null] as const;
+    }),
+  );
+  return Object.fromEntries(entries);
+}
+
 interface GhContribResponse {
   contributions?: Array<{ date: string; count: number }>;
 }

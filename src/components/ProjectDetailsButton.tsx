@@ -6,13 +6,17 @@ export function ProjectDetailsButton({ project }: { project: Project }) {
   return (
     <button
       type="button"
-      className="proj-details-btn"
+      className="proj-action"
       aria-label={`Open deep-dive for ${project.name}`}
       onClick={() =>
         window.dispatchEvent(new CustomEvent("nk:open-project", { detail: { project } }))
       }
     >
-      <span className="glyph">▸</span> deep-dive
+      <div className="pa-head">
+        <span className="glyph">▸</span>
+        <span className="pa-label">deep-dive</span>
+      </div>
+      <div className="pa-meta">{project.deepDive.tagline}</div>
     </button>
   );
 }

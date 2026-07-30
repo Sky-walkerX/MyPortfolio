@@ -1387,10 +1387,8 @@ body[data-cursor-blink="off"] .tw-cursor {
 }
 .proj-foot {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
   border-top: 1px dashed var(--border-1);
   padding-top: 12px;
   margin-top: 4px;
@@ -1414,25 +1412,62 @@ body[data-cursor-blink="off"] .tw-cursor {
 .proj-tags .t:hover {
   color: var(--fg-1);
 }
-.proj-links {
+
+/* Three enlarged action panels — deep-dive / live / source — each carrying a
+   second line of real info instead of just a label. */
+.proj-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.proj-action {
+  position: relative;
+  border: 1px solid var(--border-2);
+  background: var(--bg-0);
+  padding: 12px 12px 10px;
   display: flex;
-  gap: 14px;
-  align-items: center;
-}
-.proj-links a {
-  color: var(--fg-2);
-  font-size: 12.5px;
-  display: inline-flex;
-  align-items: center;
+  flex-direction: column;
   gap: 6px;
-  border-bottom: none;
+  text-decoration: none;
+  color: inherit;
+  font-family: var(--font-mono-stack);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms var(--ease-out), background 140ms var(--ease-out);
 }
-.proj-links a:hover {
+.proj-action:hover {
+  border-color: var(--accent);
+  background: var(--accent-08);
+}
+.proj-action .pa-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.proj-action .glyph {
   color: var(--accent);
+  font-size: 15px;
+  line-height: 1;
 }
-.proj-links a svg {
-  width: 14px;
-  height: 14px;
+.proj-action .pa-label {
+  font-size: 13px;
+  color: var(--fg-1);
+}
+.proj-action .pa-meta {
+  font-size: 11px;
+  color: var(--fg-3);
+  line-height: 1.4;
+  padding-left: 23px;
+  overflow-wrap: anywhere;
+}
+.proj-action .pa-meta .num {
+  color: var(--fg-1);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 640px) {
+  .proj-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================================
@@ -2514,29 +2549,6 @@ footer .credit .acc {
   .pm-diagram {
     font-size: 10px;
   }
-}
-
-/* Project card — "open deep-dive" affordance */
-.proj-details-btn {
-  font-family: var(--font-mono-stack);
-  font-size: 12px;
-  padding: 4px 10px;
-  border: 1px solid var(--border-2);
-  background: var(--bg-1);
-  color: var(--fg-2);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: border-color 120ms var(--ease-out), color 120ms var(--ease-out), background 120ms var(--ease-out);
-}
-.proj-details-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-08);
-}
-.proj-details-btn .glyph {
-  color: var(--accent);
 }
 
 /* ============================================================
