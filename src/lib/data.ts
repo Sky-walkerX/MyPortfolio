@@ -324,7 +324,7 @@ export const BLOGS: Blog[] = [
     description:
       "A comprehensive guide to integrating NextAuth into your Next.js app — credentials-based auth + OAuth providers like Google & GitHub. Covers setup, config, and best practices for a secure auth flow.",
     tags: ["authentication", "next.js", "nextauth", "oauth", "google", "github"],
-    href: "https://namankhandelwal.me",
+    href: "https://medium.com/@skywalkerX/setting-up-nextauth-authjs-with-credentials-and-oauth-google-github-etc-in-next-js-38414db20972",
   },
   {
     meta: "// 02 · nextjs-internals.md",
@@ -332,7 +332,7 @@ export const BLOGS: Blog[] = [
     description:
       "A deep dive into the inner workings of Next.js — architecture, rendering strategies, and performance optimizations. How SSR, SSG, and client-side navigation actually fit together.",
     tags: ["next.js", "web-dev", "performance", "ssr", "ssg", "edge-functions"],
-    href: "https://namankhandelwal.me",
+    href: "https://medium.com/@skywalkerX/nextjs-under-the-hood-8fd40a64079b",
   },
 ];
 
@@ -361,7 +361,7 @@ export const HACKATHONS: Hackathon[] = [
     medal: "★",
     name: "DevMatrix Hackathon",
     sub: "<span class='acc'>Winner</span> · conducted by Axios · IIIT Lucknow · 2nd year category",
-    date: "2025",
+    date: "2026",
   },
   {
     medal: "★",
