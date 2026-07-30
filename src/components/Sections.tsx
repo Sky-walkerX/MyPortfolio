@@ -1,6 +1,7 @@
 import { SectionHead } from "./Prompt";
 import { PaletteButton } from "./PaletteButton";
 import { ProjectDetailsButton } from "./ProjectDetailsButton";
+import { ProjectMedia } from "./ProjectMedia";
 import {
   ACHIEVEMENTS,
   BLOGS,
@@ -149,7 +150,8 @@ export function Projects() {
 
       <div className="proj-grid">
         {PROJECTS.map((p) => (
-          <article className="proj r" key={p.name}>
+          <article className={`proj r${p.media ? " has-media" : ""}`} key={p.name}>
+            <div className="proj-text">
             <div className="proj-head">
               <span className="proj-num">{p.num}</span>
               <h3 className="proj-name">{p.name}</h3>
@@ -183,6 +185,8 @@ export function Projects() {
                 </a>
               </div>
             </div>
+            </div>
+            {p.media && <ProjectMedia media={p.media} name={p.name} />}
           </article>
         ))}
       </div>

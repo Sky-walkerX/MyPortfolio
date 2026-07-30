@@ -7,6 +7,22 @@ export interface ProjectDeepDive {
   diagram?: { src: string; alt: string };
 }
 
+/**
+ * Card media, rendered as terminal output — each shot rests on its `dither`
+ * (1-bit, built by `npm run gen:dither`) and resolves to `poster` on
+ * scroll-in. The light shot is optional; projects without one show only the
+ * dark shot. `video` is extensionless; ProjectMedia appends .webm and .mp4,
+ * and the play button only appears once it is set.
+ */
+export interface ProjectMediaAsset {
+  poster: string;
+  dither: string;
+  posterLight?: string;
+  ditherLight?: string;
+  video?: string;
+  alt: string;
+}
+
 export interface Project {
   num: string;
   name: string;
@@ -15,6 +31,7 @@ export interface Project {
   bullets: string[];
   tags: string[];
   links: { live?: string; source: string };
+  media?: ProjectMediaAsset;
   deepDive: ProjectDeepDive;
 }
 
@@ -31,6 +48,13 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["next.js", "go", "nats", "postgres", "redis", "gemini"],
     links: { live: "https://www.trequila.tech/", source: "https://github.com/Sky-walkerX/trequila" },
+    media: {
+      poster: "/assets/projects/trequila/thumbnail/dark.jpg",
+      dither: "/assets/projects/trequila/thumbnail/dark-dither.png",
+      posterLight: "/assets/projects/trequila/thumbnail/light.jpg",
+      ditherLight: "/assets/projects/trequila/thumbnail/light-dither.png",
+      alt: "Trequila — AI travel itinerary generator",
+    },
     deepDive: {
       tagline: "AI travel planner · go + nats + next.js",
       problem:
@@ -66,6 +90,13 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["next.js", "go", "gin", "postgres", "websocket", "livekit", "docker"],
     links: { live: "https://skillswap.anirudhrajora.dev/", source: "https://github.com/Sky-walkerX/Skill-swap" },
+    media: {
+      poster: "/assets/projects/skillswap/thumbnail/dark.jpg",
+      dither: "/assets/projects/skillswap/thumbnail/dark-dither.png",
+      posterLight: "/assets/projects/skillswap/thumbnail/light.jpg",
+      ditherLight: "/assets/projects/skillswap/thumbnail/light-dither.png",
+      alt: "SkillSwap — peer-to-peer skill exchange",
+    },
     deepDive: {
       tagline: "P2P skill exchange · e2ee + livekit",
       problem:
@@ -101,6 +132,15 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["next.js", "react", "typescript", "prisma", "postgres", "next-auth", "tanstack-query", "tailwind"],
     links: { live: "https://lockin.namankhandelwal.dev/", source: "https://github.com/Sky-walkerX/LockIn" },
+    media: {
+      poster: "/assets/projects/lockin/thumbnail/dark.jpg",
+      dither: "/assets/projects/lockin/thumbnail/dark-dither.png",
+      posterLight: "/assets/projects/lockin/thumbnail/light.jpg",
+      ditherLight: "/assets/projects/lockin/thumbnail/light-dither.png",
+      // extensionless — ProjectMedia appends .webm and .mp4 as <source> siblings
+      video: "/assets/projects/lockin/video/demo",
+      alt: "LockIn — study and resource hub",
+    },
     deepDive: {
       tagline: "study & resource hub · subjects → milestones → tasks",
       problem:
