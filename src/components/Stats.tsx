@@ -95,6 +95,25 @@ export async function Stats() {
         num="[03]"
       />
 
+      {/* The page's second scale moment. Three numbers worth stopping for —
+          two live, one fixed — before the detail cards underneath. */}
+      <div className="stat-heads r">
+        <div className="stat-head">
+          <span className="n">
+            {stats.github.heatmap.status === "ok" ? stats.github.heatmap.total : "—"}
+          </span>
+          <span className="l">github contributions · last 6mo</span>
+        </div>
+        <div className="stat-head">
+          <span className="n">{cf?.maxRating ?? 1623}</span>
+          <span className="l">codeforces peak · {cf?.rank ?? "Expert"}</span>
+        </div>
+        <div className="stat-head">
+          <span className="n">137</span>
+          <span className="l">icpc india prelims · 2025</span>
+        </div>
+      </div>
+
       <div className="stats-grid r">
         <div className="heatmaps-stack">
           <div className="heatmap-card">

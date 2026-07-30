@@ -848,6 +848,48 @@ body[data-cursor-blink="off"] .tw-cursor {
 /* ============================================================
    STATS (heatmaps + ratings)
    ============================================================ */
+
+/* Headline numbers — the page's second scale moment after the hero.
+   Everything else in this section is detail; these three are the claim. */
+.stat-heads {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 0 0 30px;
+  border-bottom: 1px solid var(--border-1);
+  padding-bottom: 26px;
+}
+.stat-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.stat-head .n {
+  font-size: clamp(38px, 6vw, 66px);
+  line-height: 0.95;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--fg-1);
+  font-variant-numeric: tabular-nums;
+}
+.stat-head .l {
+  font-size: 11.5px;
+  color: var(--fg-4);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 700px) {
+  .stat-heads {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 14px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+  }
+  .stat-head:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
