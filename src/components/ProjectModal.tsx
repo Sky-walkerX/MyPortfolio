@@ -85,8 +85,8 @@ export function ProjectModal() {
           </Section>
 
           {dd.diagram && (
-            <Section title="$ ./diagram --ascii">
-              <pre className="pm-diagram">{dd.diagram}</pre>
+            <Section title="$ ./diagram --png">
+              <img className="pm-diagram-img" src={dd.diagram.src} alt={dd.diagram.alt} />
             </Section>
           )}
 
