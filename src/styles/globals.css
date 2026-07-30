@@ -1547,6 +1547,40 @@ body[data-cursor-blink="off"] .tw-cursor {
   top: 2px;
 }
 
+/* Tier weighting. Tier `a` is the base style above — only s and b deviate.
+   s = global/national placements · b = individual contest rounds */
+.ach li.s {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-1);
+  margin-bottom: 8px;
+}
+.ach li.s::before {
+  content: "★";
+  color: var(--yellow);
+  font-size: 12px;
+  top: 4px;
+}
+.ach li.s strong {
+  color: var(--accent-hi);
+  text-shadow: 0 0 12px rgba(123, 97, 255, 0.45);
+}
+
+.ach li.b {
+  font-size: 12.5px;
+  color: var(--fg-3);
+}
+.ach li.b::before {
+  content: "·";
+  color: var(--fg-4);
+  font-size: 15px;
+  top: -2px;
+}
+.ach li.b strong {
+  color: var(--fg-3);
+  font-weight: 400;
+}
+
 /* ============================================================
    BLOGS
    ============================================================ */

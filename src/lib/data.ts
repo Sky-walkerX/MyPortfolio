@@ -172,15 +172,42 @@ export const SKILLS = [
   { key: "infra       =", values: ["NATS JetStream", "WebSocket", "WebRTC", "LiveKit", "Server-Sent Events"] },
 ] as const;
 
-export const ACHIEVEMENTS: string[] = [
-  "Placed <strong>137th</strong> in ICPC India Prelims 2025.",
-  "<strong>Rank 146</strong> globally in Google CTF.",
-  "<strong>534th</strong> globally in Meta Hacker Cup 2025 Round 1 · 1434th in Round 2.",
-  "Finalist in the Odoo Hackathon — <strong>19,000+</strong> teams.",
-  "Expert on Codeforces (peak <strong>1623</strong>) · 4★ on CodeChef (peak <strong>1813</strong>) · Knight on LeetCode (peak <strong>1945</strong>).",
-  "Rank 89 in CodeChef Starters 176 · Rank 103 in Starters 225 · Rank 104 in Starters 198.",
-  "<strong>Rank 399</strong> in Educational Codeforces Round 191 (Div. 2) · <strong>Rank 926</strong> in Codeforces Round 1103 (Div. 3).",
-  "Contributions across <span class='hl'>tauri</span>, <span class='hl'>fedimint</span>, and <span class='hl'>Checkmate</span> ecosystems.",
+/**
+ * Visual weight of an achievement line.
+ * s — global/national placements  ·  a — sustained rating identity  ·  b — individual rounds
+ * Rendered as a class on the `<li>`; see `.ach li.s|.a|.b` in globals.css.
+ */
+export type AchievementTier = "s" | "a" | "b";
+
+export interface Achievement {
+  text: string;
+  tier: AchievementTier;
+}
+
+/** Ordered by tier — s, then a, then b. The renderer does not sort. */
+export const ACHIEVEMENTS: Achievement[] = [
+  { text: "Placed <strong>137th</strong> in ICPC India Prelims 2025.", tier: "s" },
+  { text: "<strong>Rank 146</strong> globally in Google CTF.", tier: "s" },
+  {
+    text: "<strong>534th</strong> globally in Meta Hacker Cup 2025 Round 1 · 1434th in Round 2.",
+    tier: "s",
+  },
+  {
+    text: "Expert on Codeforces (peak <strong>1623</strong>) · 4★ on CodeChef (peak <strong>1813</strong>) · Knight on LeetCode (peak <strong>1945</strong>).",
+    tier: "a",
+  },
+  {
+    text: "Contributions across <span class='hl'>tauri</span>, <span class='hl'>fedimint</span>, and <span class='hl'>Checkmate</span> ecosystems.",
+    tier: "a",
+  },
+  {
+    text: "Rank 89 in CodeChef Starters 176 · Rank 103 in Starters 225 · Rank 104 in Starters 198.",
+    tier: "b",
+  },
+  {
+    text: "<strong>Rank 399</strong> in Educational Codeforces Round 191 (Div. 2) · <strong>Rank 926</strong> in Codeforces Round 1103 (Div. 3).",
+    tier: "b",
+  },
 ];
 
 export interface NotableContrib {

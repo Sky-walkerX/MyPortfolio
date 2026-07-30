@@ -268,7 +268,7 @@ export function Skills() {
 
       <ul className="ach r">
         {ACHIEVEMENTS.map((a, i) => (
-          <li key={i} dangerouslySetInnerHTML={{ __html: a }} />
+          <li key={i} className={a.tier} dangerouslySetInnerHTML={{ __html: a.text }} />
         ))}
       </ul>
     </section>
