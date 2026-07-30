@@ -69,6 +69,14 @@
   --gutter: clamp(16px, 4vw, 40px);
 }
 
+/* On wide displays the 980px shell leaves too much dead space. The gutter is
+   already capped at 40px by here, so 1280 - 2×40 gives a 1200px content box. */
+@media (min-width: 1400px) {
+  :root {
+    --max-w: 1280px;
+  }
+}
+
 html[data-density="compact"] {
   --base-fs: 13.5px;
 }
@@ -1271,6 +1279,21 @@ body[data-cursor-blink="off"] .tw-cursor {
   position: absolute;
   left: 0;
   color: var(--accent);
+}
+
+@media (min-width: 1400px) {
+  .about-body p,
+  .exp-bullets {
+    max-width: 88ch;
+  }
+  .heatmap {
+    grid-auto-columns: 15px;
+    gap: 4px;
+  }
+  .heatmap .cell {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 /* ============================================================
