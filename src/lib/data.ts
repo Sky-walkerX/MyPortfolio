@@ -4,7 +4,7 @@ export interface ProjectDeepDive {
   architecture: string;
   systemDesign: string[];
   challenges: string[];
-  diagram?: string;
+  diagram?: { src: string; alt: string };
 }
 
 export interface Project {
@@ -48,21 +48,10 @@ export const PROJECTS: Project[] = [
         "Ordering partial updates so the UI doesn't flash old data — solved with monotonically-increasing per-trip sequence numbers.",
         "Handling upstream cost spikes — hard cap on Gemini tokens per trip, surfaced as a soft warning in the UI.",
       ],
-      diagram: `┌──────────────┐  prompt   ┌────────────┐  publish    ┌──────────────────────┐
-│ Next.js page │ ────────▶ │ /api/plan  │ ───────────▶ │ NATS JetStream       │
-└──────────────┘           └────────────┘              │  trip.plan.requested │
-        ▲                                              └──────────┬───────────┘
-        │ SSE stream                                              │ fan-out
-        │                                                         ▼
-┌───────┴───────┐  subscribe   ┌──────────────────────────────────────────────┐
-│ SSE gateway   │ ◀──────────  │ places · weather · photos · gemini workers   │
-└───────────────┘              └──────────────────┬───────────────────────────┘
-                                                  │
-                                  ┌───────────────┴──────────────┐
-                                  ▼                              ▼
-                          ┌───────────────┐              ┌──────────────┐
-                          │ Postgres      │              │ Redis cache  │
-                          └───────────────┘              └──────────────┘`,
+      diagram: {
+        src: "/assets/projects/trequila/diagram.png",
+        alt: "trequila architecture — Next.js client, API route, NATS JetStream, four fan-out workers, Postgres, Redis, and an SSE gateway",
+      },
     },
   },
   {
@@ -94,19 +83,10 @@ export const PROJECTS: Project[] = [
         "Optimistic UI vs ordering: client renders the message instantly, then reconciles with the server's canonical timestamp. Race resolved by client-generated UUIDs.",
         "Multi-tab consistency: the hub broadcasts to every open conn; each tab reconciles independently against IndexedDB.",
       ],
-      diagram: `Client A                       Server (Gin + Hub)                        Client B
-   │       WS upgrade  ─▶                  │                                  │
-   │  ◀── auth ok                          │                                  │
-   │                                       │                                  │
-   │  encrypt(msg, sharedKey)              │                                  │
-   │  ───────────────▶ ciphertext          │   route to userId=B              │
-   │                                       │   broadcast to B's conns ─────▶  │
-   │                                       │                                  │  decrypt(ciphertext, sharedKey)
-   │  ◀──── ack (server-side timestamp) ── │                                  │
-   │                                       │                                  │
-   │       ─────── LiveKit token ─────▶    │                                  │
-   │  ◀────── room JWT                     │                                  │
-   │     ───────── SFU media (E2E SRTP) ───────────────────────────────────▶  │`,
+      diagram: {
+        src: "/assets/projects/skillswap/diagram.png",
+        alt: "skillswap sequence diagram — Client A and Client B exchanging E2EE messages through the Gin + WebSocket Hub server, then negotiating LiveKit SFU media directly",
+      },
     },
   },
   {
@@ -138,13 +118,10 @@ export const PROJECTS: Project[] = [
         "Deriving progress, streaks, and focus minutes from an append-only task/timer history instead of stored counters — kills the drift that plagued the gamified predecessor.",
         "A `$` in the Postgres password silently broke runtime auth (Next.js dotenv-expand mangles `$`) — fixed by percent-encoding it as %24 in DATABASE_URL.",
       ],
-      diagram: `User
- └─ Subject ("Operating Systems")
-     ├─ Milestone (notes.md) ──< Task ──< TimerSession
-     │                            priority · dueDate
-     └─ Resource  (LINK · AI_CHAT · PDF · BOOK)
-
-Today  ◀──  tasks where dueDate ≤ end-of-day, across all subjects`,
+      diagram: {
+        src: "/assets/projects/lockin/diagram.png",
+        alt: "lockin data model — User owns Subject, Subject has Milestone and Resource, Milestone has Task, Task logs TimerSession and feeds the Today view",
+      },
     },
   },
 ];
