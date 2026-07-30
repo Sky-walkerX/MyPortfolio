@@ -196,20 +196,15 @@ export const EXPERIENCES: Experience[] = [
     ],
   },
   {
-    branch: "├──",
-    role: "Member, Web Development Wing",
+    branch: "└──",
+    role: "Core Member, Web Development & FOSS Wings",
     company: "Axios · IIIT Lucknow",
     date: "Sep 2025 — Present",
     bullets: [
-      "Technical society of IIIT Lucknow — building internal tools and running workshops on full-stack dev.",
+      "Technical society of IIIT Lucknow — mentored <strong>200+ students</strong> and organised competitive events.",
+      "Building internal tools and running workshops on full-stack dev.",
+      "Open-source advocacy + contributing to projects across Rust, Go, and TypeScript ecosystems.",
     ],
-  },
-  {
-    branch: "└──",
-    role: "Member, FOSS Wing",
-    company: "Axios · IIIT Lucknow",
-    date: "Sep 2025 — Present",
-    bullets: ["Open-source advocacy + contributing to projects across Rust, Go, and TypeScript ecosystems."],
   },
 ];
 
@@ -243,6 +238,10 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     text: "Expert on Codeforces (peak <strong>1623</strong>) · 4★ on CodeChef (peak <strong>1813</strong>) · Knight on LeetCode (peak <strong>1945</strong>).",
+    tier: "a",
+  },
+  {
+    text: "<strong>1500+</strong> problems solved across Codeforces, LeetCode, CodeChef and CSES.",
     tier: "a",
   },
   {
@@ -356,7 +355,7 @@ export const HACKATHONS: Hackathon[] = [
   {
     medal: "★",
     name: "Amazon HackOn 2026",
-    sub: "<span class='acc'>Top 300 teams</span> · shortlisted nationally",
+    sub: "<span class='acc'>Top 300</span> out of 20,000+ teams · shortlisted nationally",
     date: "2026",
   },
   {
