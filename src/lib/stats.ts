@@ -49,7 +49,7 @@ const REVALIDATE_SECONDS = 3600;
 const FETCH_TIMEOUT_MS = 12_000;
 
 const UA =
-  "nk-portfolio (+https://namankhandelwal.me)";
+  "nk-portfolio (+https://namankhandelwal.dev)";
 
 function emptyHeatmap(status: HeatmapData["status"] = "offline"): HeatmapData {
   return { cells: [], total: 0, status };

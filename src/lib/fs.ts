@@ -250,7 +250,8 @@ export const ROOT: FsNode = {
   end-to-end, from React frontends down to Go services orchestrated
   over NATS JetStream.
 
-  Right now: shipping the Formstr Super App as part of Summer of Bitcoin.
+  Lately: building LockIn, an MCP notebook for AI coding agents, after
+  shipping 60+ PRs to the Formstr Super App in Summer of Bitcoin 2026.
   Outside of work: competitive programming, CTFs, OSS (tauri, fedimint, Checkmate).
 
   Open to internships, collabs, and interesting conversations.`,
@@ -408,7 +409,8 @@ export function findProject(name: string): Project | null {
     swap: "skillswap",
     li: "lockin",
     lock: "lockin",
-    study: "lockin",
+    mcp: "lockin",
+    notes: "lockin",
   };
   const target = alias[key] ?? key;
   return PROJECTS.find((p) => p.name === target) ?? null;

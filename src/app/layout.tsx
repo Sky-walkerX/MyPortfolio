@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 };
 
 const SEO_DESCRIPTION =
-  "Naman Khandelwal — Full-Stack Developer & CS student at IIIT Lucknow (2024–2028). Summer of Bitcoin intern at Formstr. Builds Go + Next.js systems, contributes to tauri, fedimint, and Checkmate. Codeforces Expert · LeetCode Knight · Google CTF Rank 146.";
+  "Naman Khandelwal — Full-Stack Developer & CS student at IIIT Lucknow (2024–2028). Summer of Bitcoin 2026 intern at Formstr. Builds LockIn (an MCP notebook for AI coding agents) and Go + Next.js systems; contributes to tauri, fedimint, and Checkmate. ICPC Regionalist 2026 · Codeforces Expert · LeetCode Knight · Google CTF Rank 146.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -60,8 +60,13 @@ export const metadata: Metadata = {
     "Go developer",
     "Next.js developer",
     "distributed systems",
+    "MCP server",
+    "Model Context Protocol",
+    "LockIn",
+    "AI coding agents",
     "NATS JetStream",
     "competitive programmer India",
+    "ICPC Regionalist 2026",
     "Codeforces Expert",
     "LeetCode Knight",
     "Google CTF",
@@ -109,9 +114,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/assets/nk-logo.svg", type: "image/svg+xml" },
+      { url: "/assets/nk-logo-512.png", type: "image/png", sizes: "512x512" },
     ],
     shortcut: "/assets/nk-logo.svg",
-    apple: "/assets/nk-logo.svg",
+    apple: { url: "/assets/nk-logo-180.png", sizes: "180x180" },
   },
   category: "technology",
 };
@@ -123,9 +129,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     name: SITE.name,
     url: SITE.url,
     email: `mailto:${SITE.email}`,
-    image: `${SITE.url}/assets/nk-logo.svg`,
-    jobTitle: "Full-stack Developer · Summer of Bitcoin Intern",
-    worksFor: { "@type": "Organization", name: "Formstr" },
+    image: `${SITE.url}/assets/nk-logo-512.png`,
+    jobTitle: "Full-stack Developer",
     alumniOf: { "@type": "CollegeOrUniversity", name: "IIIT Lucknow" },
     sameAs: [SITE.github, SITE.linkedin],
     description: SITE.description,

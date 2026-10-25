@@ -2,7 +2,7 @@
 
 Naman Khandelwal — terminal-themed portfolio. Built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**.
 
-Live: [namankhandelwal.me](https://namankhandelwal.me)
+Live: [namankhandelwal.dev](https://namankhandelwal.dev)
 
 ## Stack
 

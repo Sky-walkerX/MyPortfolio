@@ -41,7 +41,7 @@ The whole page is one server component: [src/app/page.tsx](src/app/page.tsx) com
 
 **[src/lib/site.ts](src/lib/site.ts)** — `SITE` constants: name, URLs, email, `github`/`githubHandle`, `cfHandle` (Codeforces), `linkedin`, `resumePath`. Change identity/handles here.
 
-**⚠ The terminal has a parallel copy of the project data.** [src/lib/commands.tsx](src/lib/commands.tsx) (`PROJECTS` map + `PROJECT_ALIAS`) and [src/components/CommandPalette.tsx](src/components/CommandPalette.tsx) (the `ls` project table, the `open`/`view`/`whoami` command output, and the tab-complete name list) hardcode project names, statuses, and achievement lines **independently of `data.ts`**. When you add/remove/rename a project or change a headline stat (e.g. a Codeforces rank), grep the whole `src/` tree and update every occurrence — these files do not import from `data.ts`.
+**The terminal reads projects from `data.ts`** via the virtual filesystem in [src/lib/fs.ts](src/lib/fs.ts), but some copy is still hardcoded: project aliases (`findProject` in `fs.ts`), `about.md` in `fs.ts`, the `whoami`/`view`/`open` output and hints in [src/lib/shell.ts](src/lib/shell.ts), and `SUGGEST_CHIPS` in [src/lib/commands.tsx](src/lib/commands.tsx). When you add/rename a project or change a headline stat, grep the whole `src/` tree.
 
 ## Live stats (`src/lib/stats.ts`)
 
@@ -62,4 +62,4 @@ See [.env.example](.env.example). Both are optional:
 - Path alias `@/*` → `src/*` ([tsconfig.json](tsconfig.json)).
 - Security headers (CSP-adjacent: HSTS, X-Frame-Options, etc.) and long-cache for `/assets/*` are set in [next.config.ts](next.config.ts).
 - Keep the terminal/hacker aesthetic: monospace, lowercase labels, `acc`/`hl`/`ok`/`warn`/`muted` span classes, ASCII framing. Match the tone of surrounding entries.
-- Résumé is the source of truth for stats/achievements. When updating, sweep `data.ts`, `commands.tsx`, `CommandPalette.tsx`, `Stats.tsx`, `Hero.tsx`, `Sections.tsx`, and `layout.tsx` (SEO description/keywords) together.
+- Résumé is the source of truth for stats/achievements. When updating, sweep `data.ts`, `fs.ts`, `shell.ts`, `commands.tsx`, `site.ts`, `Stats.tsx`, `Hero.tsx`, `Sections.tsx`, and `layout.tsx` (SEO description/keywords) together, and copy the new PDF to `public/assets/Naman_Khandelwal_Resume.pdf`.

@@ -41,9 +41,10 @@ export function About() {
           building things end-to-end, from React frontends down to Go services orchestrated over NATS.
         </p>
         <p>
-          Right now I&apos;m interning with <strong>Formstr</strong> as part of Summer of Bitcoin, working on a
+          This summer I interned with <strong>Formstr</strong> through Summer of Bitcoin 2026, building a
           unified super-app for forms, notes, calendar and files — with{" "}
-          <span style={{ color: "var(--fg-1)" }}>50+ PRs</span> shipped across the core repos.
+          <span style={{ color: "var(--fg-1)" }}>60+ PRs</span> shipped to production. Now I&apos;m building{" "}
+          <strong>LockIn</strong>, a notebook my AI coding agents write to over MCP.
         </p>
         <p>
           Outside of internships, I do competitive programming (CF Expert, 4★ CodeChef), CTFs (Rank{" "}
@@ -64,7 +65,7 @@ export function About() {
           <span className="k">school</span>
           <span className="v">IIIT Lucknow · B.Tech CS · 2024 – 2028</span>
           <span className="k">gpa</span>
-          <span className="v">8.90 / 10</span>
+          <span className="v">8.88 / 10</span>
           <span className="k">github</span>
           <span className="v">
             <a href={SITE.github} target="_blank" rel="noopener noreferrer">
@@ -84,7 +85,7 @@ export function About() {
           <span className="k">site</span>
           <span className="v">
             <a href={SITE.url} target="_blank" rel="noopener noreferrer">
-              namankhandelwal.me
+              namankhandelwal.dev
             </a>
           </span>
         </div>
@@ -328,7 +329,7 @@ export function Blogs() {
       <p style={{ color: "var(--fg-4)", fontSize: 12, margin: "18px 0 0" }}>
         # full archive at{" "}
         <a href={SITE.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>
-          namankhandelwal.me
+          namankhandelwal.dev
         </a>
       </p>
     </section>
@@ -374,7 +375,7 @@ export function Contact() {
           <span className="k">site ›</span>
           <span className="v">
             <a href={SITE.url} target="_blank" rel="noopener noreferrer">
-              namankhandelwal.me
+              namankhandelwal.dev
             </a>
           </span>
         </div>

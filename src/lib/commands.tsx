@@ -44,7 +44,7 @@ export const SUGGEST_CHIPS = [
   "help",
   "tree",
   "cd projects",
-  "view trequila",
+  "view lockin",
   "cat achievements.log",
   "ls blogs",
   "email",

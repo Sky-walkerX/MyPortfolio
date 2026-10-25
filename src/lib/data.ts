@@ -38,6 +38,50 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     num: "[001]",
+    name: "lockin",
+    status: "live",
+    description:
+      "A notebook your AI coding agents write to over MCP. Claude Code, Codex and Cursor save notes, search them, and pick up where another agent stopped — and you witness everything they write.",
+    bullets: [
+      "Built an <strong>MCP server (18 tools)</strong> on GCP letting Claude Code, Codex and Cursor resume each other's work from a <span class='acc'>300-token handoff card</span> — goal, what was ruled out, and the next step as file:line.",
+      "Stopped agents from trusting outdated notes by <strong>anchoring each note to its Git commit</strong> and filtering replaced notes out of <strong>hybrid search and RAG</strong> at read time, so undoing a rejected update takes a single delete.",
+      "Cut database round trips per query from <span class='acc'>4 to 1</span> (about 90 ms per call in production) by moving to <strong>Prisma 7's pg driver adapter</strong> behind a PgBouncer transaction pooler.",
+      "A <strong>Claude Code plugin</strong> files every session into the notebook on <span class='hl'>/compact</span> and when it ends, using the PostCompact and SessionEnd hooks.",
+      "<strong>Ask your notes</strong> with a model in the browser (WebGPU), a local one (Ollama, LM Studio), or your own API key — answers cite the pages they came from.",
+    ],
+    tags: ["next.js", "typescript", "postgres", "prisma", "fastapi", "mcp", "docker", "gcp"],
+    links: { live: "https://lockin.namankhandelwal.dev/", source: "https://github.com/Sky-walkerX/LockIn" },
+    media: {
+      poster: "/assets/projects/lockin/thumbnail/dark.jpg",
+      dither: "/assets/projects/lockin/thumbnail/dark-dither.png",
+      posterLight: "/assets/projects/lockin/thumbnail/light.jpg",
+      ditherLight: "/assets/projects/lockin/thumbnail/light-dither.png",
+      // extensionless — ProjectMedia appends .webm and .mp4 as <source> siblings
+      video: "/assets/projects/lockin/video/demo",
+      alt: "LockIn — the open-source notebook your AI coding agents write to",
+    },
+    deepDive: {
+      tagline: "mcp notebook for ai coding agents · next.js + postgres",
+      problem:
+        "What you learn inside a Claude Code or Codex session — why a bug happened, why one design beat another, the command that finally worked — is gone when the session ends, and next week a different agent starts from zero. Worse, agents that do remember trust notes the code has already moved past. Stale memory outranking the current fact is the common complaint about agent memory tools.",
+      architecture:
+        "A Next.js 16 app on Postgres 17 + Prisma, exposing an MCP server at /api/mcp that any MCP client can connect to with one command from Settings. Notes are filed by subject and carry who wrote them. Embeddings run in an optional Python (FastAPI) ingest service or in the browser, and keyword search always works without them. AGPL-3.0, hosted on GCP, or self-hosted with one docker compose up.",
+      systemDesign: [
+        "Witnessing: every note an agent saves shows which agent wrote it and stays 'to witness' until you've read it. An agent can only edit notes it wrote; anyone else's it can only append to.",
+        "Commit anchoring: a note about code records the repo, the commit, that commit's date and the files it describes. The next agent is told to run git diff <commit> -- <files> first, then confirms the note, writes a replacement, or flags it for you.",
+        "Replacement: a replacement retires the old note only once you witness it. From then on search and Ask skip the old page at read time, so rejecting an update is a single delete — no rewrite of the old note.",
+        "Contradictions at write time: saving a note returns existing notes that look related (embedding similarity, or full-text when the embedder is down). The notebook runs no model of its own — the saving agent decides, and calls link_replacement if its note makes an older one wrong.",
+        "Handoffs: when an agent hits its usage cap mid-task, save_handoff leaves a short card (goal, where it stands, what was ruled out, next step as file:line, pages to read first). Durable notes and unfinished working state are kept apart on purpose.",
+      ],
+      challenges: [
+        "Capturing sessions from a remote server: Claude Code's PreCompact hook only gets a local transcript path a remote server can't read, so the plugin captures after compaction — PostCompact receives the summary itself and passes it straight to an MCP tool.",
+        "SessionEnd has a 1.5s budget, so the plugin starts a detached claude -p on Haiku that resumes a fork of the session, summarises what came after the last compaction, and files it through the same MCP server — each session stays one note that later captures append to.",
+        "Connection overhead on a pooled database: four round trips per query became one by moving to Prisma 7's pg driver adapter behind PgBouncer in transaction mode — about 90 ms saved per call in production.",
+      ],
+    },
+  },
+  {
+    num: "[002]",
     name: "trequila",
     status: "live",
     description:
@@ -83,7 +127,7 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    num: "[002]",
+    num: "[003]",
     name: "skillswap",
     status: "live",
     description:
@@ -125,52 +169,6 @@ export const PROJECTS: Project[] = [
       },
     },
   },
-  {
-    num: "[003]",
-    name: "lockin",
-    status: "live",
-    description:
-      "A personal study & resource hub organized around Subjects — plan milestones, stash resources, and track focus time. You're the brain; LockIn is the shelf + planner, not an AI generator.",
-    bullets: [
-      "Drag-and-drop task boards with <strong>optimistic React Query mutations</strong>, updating the UI instantly ahead of server sync.",
-      "Code-split a <strong>CodeMirror</strong> markdown editor out of the main bundle and memoized list rows to cut re-renders.",
-      "One component tree, two fully interchangeable themes via <strong>next-themes</strong> — Creative (light, neobrutalist) and Focus (dark, editor-calm).",
-      "Cross-subject <strong>Today</strong> view for due/overdue tasks; a focus timer logs time per task into a GitHub-style heatmap.",
-    ],
-    tags: ["react", "next.js", "typescript", "tanstack-query", "dnd-kit", "codemirror", "prisma", "postgres"],
-    links: { live: "https://lockin.namankhandelwal.dev/", source: "https://github.com/Sky-walkerX/LockIn" },
-    media: {
-      poster: "/assets/projects/lockin/thumbnail/dark.jpg",
-      dither: "/assets/projects/lockin/thumbnail/dark-dither.png",
-      posterLight: "/assets/projects/lockin/thumbnail/light.jpg",
-      ditherLight: "/assets/projects/lockin/thumbnail/light-dither.png",
-      // extensionless — ProjectMedia appends .webm and .mp4 as <source> siblings
-      video: "/assets/projects/lockin/video/demo",
-      alt: "LockIn — study and resource hub",
-    },
-    deepDive: {
-      tagline: "study & resource hub · subjects → milestones → tasks",
-      problem:
-        "Most study tools are either dumb TODO lists or AI generators that do your thinking for you. LockIn keeps the human as the brain: one place to organize learning around Subjects, break each into ordered Milestones and Tasks, save resources, and see what's due today across everything.",
-      architecture:
-        "Single Next.js App-Router app (React 19, TypeScript). Prisma + Postgres model a strict Subject → Milestone → Task → TimerSession tree (plus Subject → Resource). NextAuth v4 (JWT) for auth, TanStack Query for the data layer, and shadcn/ui + Tailwind v4 + next-themes for a two-mode design system.",
-      systemDesign: [
-        "Data model: User → Subject → Milestone → Task → TimerSession, and Subject → Resource. Milestone/subject progress is derived (% of tasks done), never stored — no drift.",
-        "Ownership scoping: every write is Prisma-scoped to the JWT's user; Milestones (no userId) are scoped through their parent subject.",
-        "Two-mode theming: the same component tree renders Creative (light, neobrutalist) or Focus (dark, editor) purely via CSS tokens flipped by next-themes — per-subject accent colors auto-soften in Focus.",
-        "Focus timer: POST /api/tasks/[id]/timer start/stop closes the open session and increments the task's time-spent in a single transaction.",
-        "Today view: one /api/tasks?today=true query returns incomplete tasks due by end-of-day across all subjects.",
-      ],
-      challenges: [
-        "Deriving progress, streaks, and focus minutes from an append-only task/timer history instead of stored counters — kills the drift that plagued the gamified predecessor.",
-        "A `$` in the Postgres password silently broke runtime auth (Next.js dotenv-expand mangles `$`) — fixed by percent-encoding it as %24 in DATABASE_URL.",
-      ],
-      diagram: {
-        src: "/assets/projects/lockin/diagram.png",
-        alt: "lockin data model — User owns Subject, Subject has Milestone and Resource, Milestone has Task, Task logs TimerSession and feeds the Today view",
-      },
-    },
-  },
 ];
 
 export interface Experience {
@@ -186,34 +184,34 @@ export const EXPERIENCES: Experience[] = [
     branch: "├──",
     role: "Summer of Bitcoin Intern",
     company: "Formstr",
-    date: "May 2026 — Present",
+    date: "May 2026 — Aug 2026",
     bullets: [
-      "Building the <strong>Formstr Super App</strong> — book events, manage files, create forms, and view analytics with <strong>AI as the interface</strong>, powered by <strong>MCP tool calling</strong>.",
-      "Built <strong>@formstr/mcp</strong>, an MCP server exposing <strong>50+ tools</strong> to LLM hosts, and <strong>@formstr/calendar-sdk</strong>, an npm package for scheduling calendar events and RSVPs on Nostr.",
-      "Practised <strong>test-driven development</strong> — <strong>778 tests</strong> across <strong>97 Vitest files</strong> to reach <span class='acc'>88–91%</span> statement coverage, shipping with minimal defects.",
-      "Fixed a <strong>critical security vulnerability</strong> leaking NIP-44 wrapped events and cryptographic signing keys into exported files.",
-      'Shipped <strong>50+ merged pull requests</strong> to the Super App in production. <a href="https://github.com/search?q=is:pr+is:merged+author:Sky-walkerX+org:formstr-hq&type=pullrequests" target="_blank" rel="noopener">view contributions →</a>',
+      "Selected <span class='acc'>1 of 50</span> among <strong>3,272</strong> global applicants (top 1.5%).",
+      'Shipped <strong>60+ merged pull requests</strong> to production for the <strong>Formstr Super App</strong>, maintaining <span class=\'acc\'>88–91%</span> statement coverage across <strong>778 Vitest</strong> unit and end-to-end tests in 97 test suites. <a href="https://github.com/search?q=is:pr+is:merged+author:Sky-walkerX+org:formstr-hq&type=pullrequests" target="_blank" rel="noopener">view contributions →</a>',
+      "Architected <strong>@formstr/mcp</strong>, an MCP server whose <strong>50+ tools</strong> let AI agents run forms, calendar, notes and Kanban.",
+      "Engineered the <strong>Kanban and Calendar SDKs</strong> with role-based permissions and reactive local-relay stores.",
+      "Fixed a <strong>critical security vulnerability</strong> leaking NIP-44 wrapped events and cryptographic signing keys into client exports.",
     ],
   },
   {
     branch: "└──",
-    role: "Core Member, Web Development & FOSS Wings",
+    role: "Coordinator, Web Development Wing · Senior Member, FOSS Wing",
     company: "Axios · IIIT Lucknow",
-    date: "Sep 2025 — Present",
+    date: "Aug 2026 — Present",
     bullets: [
-      "Technical society of IIIT Lucknow — mentored <strong>200+ students</strong> and organised competitive events.",
-      "Building internal tools and running workshops on full-stack dev.",
-      "Open-source advocacy + contributing to projects across Rust, Go, and TypeScript ecosystems.",
+      "Conducted <strong>30+ sessions</strong> on Web Development and FOSS, covering Linux, Git, JavaScript, React and DevOps.",
+      'Built the society\'s website, <a href="https://axiosiiitl.dev" target="_blank" rel="noopener">axiosiiitl.dev</a>, to showcase its work and activities.',
+      "Core member since Sep 2025 — mentored <strong>200+ students</strong> and organised competitive events.",
     ],
   },
 ];
 
 export const SKILLS = [
-  { key: "languages   =", values: ["JavaScript", "TypeScript", "Go", "C", "C++", "Python", "Java", "Bash"] },
-  { key: "frameworks  =", values: ["React", "Next.js", "Node", "Express", "Gin", "TailwindCSS"] },
-  { key: "devops      =", values: ["Git", "GitHub", "Linux", "Docker", "Vercel", "Heroku", "Cloudflare"] },
+  { key: "languages   =", values: ["TypeScript", "JavaScript", "Python", "Go", "C++", "C", "Java", "Bash"] },
+  { key: "frameworks  =", values: ["React", "Next.js", "Node.js", "Express", "FastAPI", "Gin", "Vitest", "TailwindCSS"] },
+  { key: "devops      =", values: ["Git", "GitHub Actions", "CI/CD", "Linux", "Docker", "GCP", "AWS", "Vercel", "Heroku", "Cloudflare"] },
   { key: "databases   =", values: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "Prisma"] },
-  { key: "infra       =", values: ["NATS JetStream", "WebSocket", "WebRTC", "LiveKit", "Server-Sent Events"] },
+  { key: "infra       =", values: ["MCP", "NATS JetStream", "WebSocket", "WebRTC", "LiveKit", "Server-Sent Events", "Microservices", "Distributed Systems"] },
 ] as const;
 
 /**
@@ -230,8 +228,8 @@ export interface Achievement {
 
 /** Ordered by tier — s, then a, then b. The renderer does not sort. */
 export const ACHIEVEMENTS: Achievement[] = [
-  { text: "Placed <strong>137th</strong> in ICPC India Prelims 2025.", tier: "s" },
-  { text: "<strong>Rank 146</strong> globally in Google CTF.", tier: "s" },
+  { text: "<strong>ICPC Regionalist 2026</strong> (India) · ranked <strong>AIR 137</strong> in the ICPC India Prelims 2025.", tier: "s" },
+  { text: "<strong>Rank 146</strong> globally in Google CTF 2025.", tier: "s" },
   {
     text: "<strong>534th</strong> globally in Meta Hacker Cup 2025 Round 1 · 1434th in Round 2.",
     tier: "s",
@@ -348,14 +346,14 @@ export interface Hackathon {
 export const HACKATHONS: Hackathon[] = [
   {
     medal: "★",
-    name: "Flipkart Gridlock 2026",
-    sub: "<span class='acc'>1st in Round 1</span> · through to the prototype round",
+    name: "Flipkart GridLock 2.0",
+    sub: "<span class='acc'>1st in Round 1</span> among 35,000+ registered participants · through to the prototype round",
     date: "2026",
   },
   {
     medal: "★",
-    name: "Amazon HackOn 2026",
-    sub: "<span class='acc'>Top 300</span> out of 20,000+ teams · shortlisted nationally",
+    name: "Amazon HackOn 6.0",
+    sub: "<span class='acc'>Top 300</span> out of 21,000 teams · shortlisted nationally",
     date: "2026",
   },
   {

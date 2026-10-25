@@ -100,8 +100,8 @@ export function Hero() {
           <span className="hl">Summer of Bitcoin</span> <span className="muted">@</span>{" "}
           <span className="hl">Formstr</span>
           <br />
-          Codeforces <span className="hl">Expert</span> <span className="sep">·</span> ICPC prelims{" "}
-          <span className="hl">137</span> <span className="sep">·</span> LeetCode{" "}
+          ICPC <span className="hl">Regionalist</span> <span className="sep">·</span> Codeforces{" "}
+          <span className="hl">Expert</span> <span className="sep">·</span> LeetCode{" "}
           <span className="hl">Knight</span>
         </p>
       </div>

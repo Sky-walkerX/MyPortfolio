@@ -95,7 +95,7 @@ export default function OG() {
           }}
         >
           <span>IIIT Lucknow · CS &apos;28</span>
-          <span style={{ color: "#7b61ff" }}>namankhandelwal.me</span>
+          <span style={{ color: "#7b61ff" }}>namankhandelwal.dev</span>
         </div>
       </div>
     ),

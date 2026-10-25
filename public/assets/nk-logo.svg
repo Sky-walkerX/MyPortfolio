@@ -1,3 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 48" width="120" height="48">
-  <text x="0" y="36" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="40" letter-spacing="-1.5" fill="#7B61FF">NK.</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32"><rect width="32" height="32" rx="7" fill="#0a0a0a"/><g transform="translate(-0.67 0)"><path fill="#f0ede8" d="M6.4 8h3.2v16H6.4zM15.6 8h3.2v16h-3.2zM6.4 8H10l8.8 16h-3.6z"/><path fill="#7b61ff" d="M23.06 8h3.88l-8.14 11.82v-5.64zM19.7 13.23h3.4l3.8 10.77h-3.4z"/></g></svg>

@@ -162,9 +162,9 @@ export function createShell(ctx: ShellContext): Shell {
 
     whoami: () =>
       emit(`<span class="hl">Naman Khandelwal</span>
-3rd year CS @ <span class="acc">IIIT Lucknow</span> · GPA 8.90
-Currently: <span class="acc">Summer of Bitcoin</span> intern @ Formstr
-Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
+3rd year CS @ <span class="acc">IIIT Lucknow</span> · GPA 8.88
+Building: <span class="acc">LockIn</span> · prev. <span class="acc">Summer of Bitcoin</span> 2026 @ Formstr
+ICPC Regionalist 2026 · Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
 
     about: () => COMMANDS.cat(["~/about.md"]),
 
@@ -248,7 +248,7 @@ Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
       const arg = args[0] ?? "";
       if (!arg) {
         return emit(
-          `<span class="err">view: missing argument</span>\n<span class="muted"># try: view trequila · view skillswap · view lockin</span>`,
+          `<span class="err">view: missing argument</span>\n<span class="muted"># try: view lockin · view trequila · view skillswap</span>`,
         );
       }
       // `view .` inside a project dir views that project.
@@ -257,7 +257,7 @@ Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
       const project = findProject(name);
       if (!project) {
         return emit(
-          `<span class="err">view: '${escapeHTML(arg)}' is not a project.</span>\n<span class="muted"># projects: trequila, skillswap, lockin · hackathons live in ~/hackathons</span>`,
+          `<span class="err">view: '${escapeHTML(arg)}' is not a project.</span>\n<span class="muted"># projects: lockin, trequila, skillswap · hackathons live in ~/hackathons</span>`,
         );
       }
       ctx.openProject?.(project.name);
@@ -316,7 +316,7 @@ Expert on CF · 4★ on CodeChef · Knight on LeetCode · Google CTF rank 146`),
 
       if (!url) {
         return emit(
-          `<span class="err">open: '${escapeHTML(arg)}' not found.</span>\n<span class="muted"># try: trequila · nextauth · github · linkedin · resume · formstr</span>`,
+          `<span class="err">open: '${escapeHTML(arg)}' not found.</span>\n<span class="muted"># try: lockin · trequila · nextauth · github · linkedin · resume · formstr</span>`,
         );
       }
       window.open(url, "_blank", "noopener");
